@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { faLightbulb } from '../utils/faIcons'
+import { faLightbulb, faBook } from '../utils/faIcons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTheme } from '../context/ThemeContext'
 
@@ -9,16 +9,16 @@ export default function Navbar() {
   return (
     <nav className={`navbar navbar-expand bg-${theme}`}>
       <div className='container-fluid'>
-        <ul className='navbar-nav ms-auto align-items-center'>
-          <li className='nav-item'>
+        <ul className='navbar-nav ms-auto align-items-center d-flex mb-3'>
+          <li className='nav-item me-auto p-2'>
             <Link
               to='/'
               className='nav-link'
             >
-              Home
+              <FontAwesomeIcon icon ={faBook}/>
             </Link>
           </li>
-          <li className='nav-item'>
+          <li className='nav-item p-2'>
             <Link
               to='/users'
               className='nav-link'
@@ -26,7 +26,7 @@ export default function Navbar() {
               Users
             </Link>
           </li>
-          <li className='nav-item'>
+          <li className='nav-item p-2'>
             <Link
               to='/contact'
               className='nav-link'
@@ -34,7 +34,7 @@ export default function Navbar() {
               Contact
             </Link>
           </li>
-          <li className='nav-item'>
+          <li className='nav-item p-2'>
             <button
               className={`btn btn-outline-${
                 theme === 'dark' ? 'light' : 'dark'
