@@ -23,12 +23,27 @@ type Pages = {
   "/contact": {
     params: {};
   };
+  "/admin/login": {
+    params: {};
+  };
+  "/admin": {
+    params: {};
+  };
+  "/admin/users": {
+    params: {};
+  };
+  "/admin/books": {
+    params: {};
+  };
+  "/admin/authors": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.jsx": {
     id: "root";
-    page: "/" | "/genre" | "/users" | "/contact";
+    page: "/" | "/genre" | "/users" | "/contact" | "/admin/login" | "/admin" | "/admin/users" | "/admin/books" | "/admin/authors";
   };
   "routes/_index.jsx": {
     id: "routes/_index";
@@ -46,6 +61,26 @@ type RouteFiles = {
     id: "routes/contact";
     page: "/contact";
   };
+  "routes/admin-login.jsx": {
+    id: "routes/admin-login";
+    page: "/admin/login";
+  };
+  "routes/admin-dashboard.jsx": {
+    id: "routes/admin-dashboard";
+    page: "/admin";
+  };
+  "routes/admin-users.jsx": {
+    id: "routes/admin-users";
+    page: "/admin/users";
+  };
+  "routes/admin-books.jsx": {
+    id: "routes/admin-books";
+    page: "/admin/books";
+  };
+  "routes/admin-authors.jsx": {
+    id: "routes/admin-authors";
+    page: "/admin/authors";
+  };
 };
 
 type RouteModules = {
@@ -54,4 +89,9 @@ type RouteModules = {
   "routes/_genre": typeof import("./app/routes/_genre.jsx");
   "routes/users": typeof import("./app/routes/users.jsx");
   "routes/contact": typeof import("./app/routes/contact.jsx");
+  "routes/admin-login": typeof import("./app/routes/admin-login.jsx");
+  "routes/admin-dashboard": typeof import("./app/routes/admin-dashboard.jsx");
+  "routes/admin-users": typeof import("./app/routes/admin-users.jsx");
+  "routes/admin-books": typeof import("./app/routes/admin-books.jsx");
+  "routes/admin-authors": typeof import("./app/routes/admin-authors.jsx");
 };
