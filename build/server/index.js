@@ -185,7 +185,7 @@ const _index = UNSAFE_withComponentProps(function Home() {
     children: /* @__PURE__ */ jsxs("div", {
       className: "container",
       children: [/* @__PURE__ */ jsx("h2", {
-        children: "Genero"
+        children: "Género"
       }), /* @__PURE__ */ jsx("div", {
         className: "bookstand",
         children: /* @__PURE__ */ jsx("div", {

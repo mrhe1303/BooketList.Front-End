@@ -23,7 +23,7 @@ export default function Home() {
 
     <div>
       <div className="container">
-        <h2>Genero</h2>
+        <h2>Género</h2>
         <div className="bookstand">
           <div className="overflow-auto h-25">
             <div className="d-flex flex-nowrap gap-4 pb-3 ">
