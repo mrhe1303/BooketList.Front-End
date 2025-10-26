@@ -1,16 +1,19 @@
 import { Outlet } from 'react-router'
 import HtmlShell from './components/HtmlShell.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
+import { AuthProvider } from './context/Authcontext.jsx'
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <HtmlShell>
-        <main className='container mt-4'>
-          <Outlet />
-        </main>
-      </HtmlShell>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <HtmlShell>
+          <main className='container mt-4'>
+            <Outlet />
+          </main>
+        </HtmlShell>
+      </ThemeProvider>
+    </AuthProvider>
   )
 }
 
