@@ -171,30 +171,34 @@ export default function AdminAuthors() {
                           </td>
                           <td>{author.joinDate}</td>
                           <td>
-                            <div className="btn-group">
+                            <div className="d-flex gap-1 flex-nowrap">
                               <Link 
                                 to={`/admin/authors/${author.id}`}
                                 className="btn btn-sm btn-outline-primary"
+                                title="Ver detalles"
                               >
                                 <i className="fas fa-eye"></i>
                               </Link>
                               <Link 
                                 to={`/admin/authors/${author.id}/books`}
                                 className="btn btn-sm btn-outline-info"
+                                title="Ver libros"
                               >
                                 <i className="fas fa-book"></i>
                               </Link>
                               <button
                                 className={`btn btn-sm ${author.verified ? 'btn-warning' : 'btn-success'}`}
                                 onClick={() => toggleVerification(author.id)}
+                                title={author.verified ? 'Quitar verificación' : 'Verificar autor'}
                               >
                                 <i className={`fas ${author.verified ? 'fa-times' : 'fa-check'}`}></i>
                               </button>
                               <button
                                 className="btn btn-sm btn-outline-danger"
                                 onClick={() => deleteAuthor(author.id)}
+                                title="Eliminar autor"
                               >
-                                <i className="fas fa-trash"></i>
+                                <i className="fas fa-trash-alt"></i>
                               </button>
                             </div>
                           </td>

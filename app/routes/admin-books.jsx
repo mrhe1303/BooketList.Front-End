@@ -102,18 +102,27 @@ export default function AdminBooks() {
                           <td>{book.addedDate}</td>
                           <td>{book.reviews}</td>
                           <td>
-                            <div className="btn-group">
-                              <button className="btn btn-sm btn-outline-primary">
+                            <div className="d-flex gap-1 flex-nowrap">
+                              <Link 
+                                to={`/admin/books/edit/${book.id}`}
+                                className="btn btn-sm btn-outline-primary"
+                                title="Ver detalles"
+                              >
                                 <i className="fas fa-eye"></i>
-                              </button>
-                              <button className="btn btn-sm btn-outline-warning">
+                              </Link>
+                              <Link 
+                                to={`/admin/books/edit/${book.id}`}
+                                className="btn btn-sm btn-outline-warning"
+                                title="Editar libro"
+                              >
                                 <i className="fas fa-edit"></i>
-                              </button>
+                              </Link>
                               <button
                                 className="btn btn-sm btn-outline-danger"
                                 onClick={() => deleteBook(book.id)}
+                                title="Eliminar libro"
                               >
-                                <i className="fas fa-trash"></i>
+                                <i className="fas fa-trash-alt"></i>
                               </button>
                             </div>
                           </td>

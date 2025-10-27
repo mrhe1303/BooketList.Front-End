@@ -57,7 +57,7 @@ export default function AdminUsers() {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar (mismo que en dashboard) */}
+        {/* Sidebar */}
         <div className="col-md-3 col-lg-2 bg-dark text-white vh-100 position-fixed">
           <div className="p-3">
             <h4 className="text-center mb-4">BooketList Admin</h4>
@@ -147,7 +147,7 @@ export default function AdminUsers() {
                           <td>{user.email}</td>
                           <td>
                             <span className={`badge ${user.role === 'author' ? 'bg-info' : 'bg-secondary'}`}>
-                              {user.role}
+                              {user.role === 'author' ? 'Autor' : 'Usuario'}
                             </span>
                           </td>
                           <td>
@@ -158,24 +158,27 @@ export default function AdminUsers() {
                           <td>{user.joinDate}</td>
                           <td>{user.booksAdded}</td>
                           <td>
-                            <div className="btn-group">
+                            <div className="d-flex gap-1 flex-nowrap">
                               <Link 
                                 to={`/admin/users/${user.id}`}
                                 className="btn btn-sm btn-outline-primary"
+                                title="Ver perfil"
                               >
                                 <i className="fas fa-eye"></i>
                               </Link>
                               <button
                                 className={`btn btn-sm ${user.status === 'active' ? 'btn-warning' : 'btn-success'}`}
                                 onClick={() => toggleUserStatus(user.id)}
+                                title={user.status === 'active' ? 'Bloquear usuario' : 'Desbloquear usuario'}
                               >
                                 <i className={`fas ${user.status === 'active' ? 'fa-lock' : 'fa-unlock'}`}></i>
                               </button>
                               <button
                                 className="btn btn-sm btn-outline-danger"
                                 onClick={() => deleteUser(user.id)}
+                                title="Eliminar usuario"
                               >
-                                <i className="fas fa-trash"></i>
+                                <i className="fas fa-trash-alt"></i>
                               </button>
                             </div>
                           </td>
