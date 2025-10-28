@@ -65,7 +65,7 @@ export default function Home() {
             <h5 className="card-title">BooketList</h5>
             <h6 className="card-subtitle mb-2 text-body-secondary">Bienvenido/a #nombreDeUsuario</h6>
             <p className="card-text">¡Comienza a explorar! </p>
-            <a href="#MiBiblioteca" className="card-link">Mi Biblioteca</a>
+            <a href="/biblioteca" className="card-link">Mi Biblioteca</a>
             <a href="/libros" className="card-link">Encuentra tu siguiente libro favorito</a>
           </div>
         </div>

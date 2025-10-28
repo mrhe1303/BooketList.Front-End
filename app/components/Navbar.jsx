@@ -24,7 +24,7 @@ export default function Navbar() {
           </li>
             <li className='nav-item p-2'>
             <Link
-              to='/genero'
+              to='/generosTodos'
               className='nav-link'
             >
               Géneros
@@ -53,9 +53,9 @@ export default function Navbar() {
 
           </li>
           <li className='nav-item p-2'>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
-              <button class="btn btn-outline-light" type="submit">Buscar</button>
+            <form className="d-flex" role="search">
+              <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
+              <button className="btn btn-outline-light" type="submit">Buscar</button>
             </form>
           </li>
           <li className='nav-item p-2'>
