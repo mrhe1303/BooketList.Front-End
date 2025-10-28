@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router'
 import HtmlShell from './components/HtmlShell.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
 
 export default function App() {
 
@@ -11,11 +12,13 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <HtmlShell>
-        <main className= {isHomePage ? '' : 'container mt-4'}>
-          <Outlet />
-        </main>
-      </HtmlShell>
+      <AuthProvider>
+        <HtmlShell>
+          <main className={isHomePage ? '' : 'container mt-4'}>
+            <Outlet />
+          </main>
+        </HtmlShell>
+      </AuthProvider>
     </ThemeProvider>
   )
 }

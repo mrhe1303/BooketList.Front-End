@@ -26,12 +26,18 @@ type Pages = {
   "/contact": {
     params: {};
   };
+  "/login": {
+    params: {};
+  };
+  "/register": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.jsx": {
     id: "root";
-    page: "/" | "/genero" | "/detalle" | "/users" | "/contact";
+    page: "/" | "/genero" | "/detalle" | "/users" | "/contact" | "/login" | "/register";
   };
   "routes/_index.jsx": {
     id: "routes/_index";
@@ -53,6 +59,14 @@ type RouteFiles = {
     id: "routes/contact";
     page: "/contact";
   };
+  "routes/login.jsx": {
+    id: "routes/login";
+    page: "/login";
+  };
+  "routes/register.jsx": {
+    id: "routes/register";
+    page: "/register";
+  };
 };
 
 type RouteModules = {
@@ -62,4 +76,6 @@ type RouteModules = {
   "routes/_detalle": typeof import("./app/routes/_detalle.jsx");
   "routes/users": typeof import("./app/routes/users.jsx");
   "routes/contact": typeof import("./app/routes/contact.jsx");
+  "routes/login": typeof import("./app/routes/login.jsx");
+  "routes/register": typeof import("./app/routes/register.jsx");
 };

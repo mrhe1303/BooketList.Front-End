@@ -15,7 +15,7 @@ export default function Navbar() {
               to='/'
               className='nav-link'
             >
-              <FontAwesomeIcon icon ={faBook}/>
+              <FontAwesomeIcon icon={faBook}/>
             </Link>
           </li>
           <li className='nav-item p-2'>
@@ -32,6 +32,12 @@ export default function Navbar() {
               className='nav-link'
             >
               Contact
+            </Link>
+          </li>
+          
+          <li className='nav-item p-2'>
+            <Link to="/register" className="nav-link">
+              Crear Cuenta
             </Link>
           </li>
           <li className='nav-item p-2'>
