@@ -22,12 +22,7 @@ export default function Home() {
 
 
   return (
-
-    <>
-    // Condicional para comprobar si ya se inició sesión. Si no:
-      <div className="homeContainer text-start my-5 px-4">
-
-
+<>  
         <div className="row">
           <div className="welcomeContainer col-8" >
             <h1>BooketList - Encuentra tu próximo libro </h1>
@@ -55,7 +50,7 @@ export default function Home() {
           </div>
 
         </div>
-      </div>
+    
 //Si ya se inició sesión:
 
 
