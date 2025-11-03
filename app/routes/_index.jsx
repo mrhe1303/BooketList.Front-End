@@ -4,7 +4,7 @@ import { useLoaderData, Link, useParams } from "react-router";
 
 
 export async function loader() {
-  const response = await fetch('http://127.0.0.1:5000/api/books')
+  const response = await fetch('https://backend-gold-alpha-80.vercel.app/api/books')
 
 
 
@@ -12,9 +12,9 @@ export async function loader() {
 }
 
 export default function Home() {
-    const data = useLoaderData();
+  const data = useLoaderData();
 
-   console.log(data);
+  console.log(data);
 
 
 
@@ -22,35 +22,35 @@ export default function Home() {
 
 
   return (
-<>  
-        <div className="row">
-          <div className="welcomeContainer col-8" >
-            <h1>BooketList - Encuentra tu próximo libro </h1>
-            <p>¡Bienvenidos y Bienvenidas!</p>
-            <p>BooketList es el lugar de encuentro para todos los que alguna vez se dijeron a sí mismos: "No sé qué leer".</p>
-            <p>Acá, encontrarás un compendio de todos los libros que toda persona amante de la literatura debe leer antes de morir. Tenemos libros para todos los gustos y de todos los géneros, guarda tus favoritos, agrega reseñas y calificaciones y date el per</p>
-          </div>
-
-          <div className="loginContainer col-4">
-            <form>
-              <h2>Iniciar sesión</h2>
-              <div className="mb-3">
-                <label htmlFor="correoElectrónico" className="form-label">Correo electrónico</label>
-                <input type="email" className="form-control" id="correoElectrónico" aria-describedby="emailHelp" />
-
-              </div>
-              <div className="mb-3">
-                <label htmlFor="contraseña" className="form-label">Contraseña</label>
-                <input type="password" className="form-control" id="contraseña" />
-              </div>
-
-              <button type="submit" className="btn btn-light">Iniciar sesión</button>
-              <p>¿No tienes una cuenta? <Link to={'/register'}>Crea una cuenta.</Link></p>
-            </form>
-          </div>
-
+    <>
+      <div className="row">
+        <div className="welcomeContainer col-8" >
+          <h1>BooketList - Encuentra tu próximo libro </h1>
+          <p>¡Bienvenidos y Bienvenidas!</p>
+          <p>BooketList es el lugar de encuentro para todos los que alguna vez se dijeron a sí mismos: "No sé qué leer".</p>
+          <p>Acá, encontrarás un compendio de todos los libros que toda persona amante de la literatura debe leer antes de morir. Tenemos libros para todos los gustos y de todos los géneros, guarda tus favoritos, agrega reseñas y calificaciones y date el per</p>
         </div>
-    
+
+        <div className="loginContainer col-4">
+          <form>
+            <h2>Iniciar sesión</h2>
+            <div className="mb-3">
+              <label htmlFor="correoElectrónico" className="form-label">Correo electrónico</label>
+              <input type="email" className="form-control" id="correoElectrónico" aria-describedby="emailHelp" />
+
+            </div>
+            <div className="mb-3">
+              <label htmlFor="contraseña" className="form-label">Contraseña</label>
+              <input type="password" className="form-control" id="contraseña" />
+            </div>
+
+            <button type="submit" className="btn btn-light">Iniciar sesión</button>
+            <p>¿No tienes una cuenta? <Link to={'/register'}>Crea una cuenta.</Link></p>
+          </form>
+        </div>
+
+      </div>
+
 //Si ya se inició sesión:
 
 
@@ -79,10 +79,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-      </div>
-    </div >
-      </>
+        </div>
+      </div >
+    </>
 
 
-      )
+  )
 }

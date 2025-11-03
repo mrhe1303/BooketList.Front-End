@@ -1,20 +1,20 @@
 import { useLoaderData, Link } from "react-router";
 
 export async function loader() {
-    
-    const genresResponse = await fetch('http://127.0.0.1:5000/api/books/genres');
+
+    const genresResponse = await fetch('https://backend-gold-alpha-80.vercel.app/api/books/genres');
     const genresData = await genresResponse.json();
 
-    
+
     const genresWithBooks = await Promise.all(
         genresData.genres.map(async (genre) => {
-            
+
             const genreSlug = genre.toLowerCase()
                 .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                .replace(/\s+/g, '-'); 
+                .replace(/\s+/g, '-');
 
             const booksResponse = await fetch(
-                `http://127.0.0.1:5000/api/books/genre/${genreSlug}`
+                `https://backend-gold-alpha-80.vercel.app/api/books/genre/${genreSlug}`
             );
             const books = await booksResponse.json();
 

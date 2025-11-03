@@ -2,7 +2,7 @@ import { useLoaderData, Link, useNavigate } from "react-router";
 
 export async function loader({ params }) {
     const { bookId } = params;
-    const response = await fetch(`http://127.0.0.1:5000/api/books/${bookId}`);
+    const response = await fetch(`https://backend-gold-alpha-80.vercel.app/api/books/${bookId}`);
 
     if (!response.ok) {
         throw new Response("Libro no encontrado", { status: 404 });
