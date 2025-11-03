@@ -23,11 +23,15 @@ type Pages = {
   "/generosTodos": {
     params: {};
   };
-  "/genero": {
-    params: {};
+  "/generosTodos/:slug": {
+    params: {
+      "slug": string;
+    };
   };
-  "/detalle": {
-    params: {};
+  "/detalle/:bookId": {
+    params: {
+      "bookId": string;
+    };
   };
   "/users": {
     params: {};
@@ -76,7 +80,7 @@ type Pages = {
 type RouteFiles = {
   "root.jsx": {
     id: "root";
-    page: "/" | "/libros" | "/autores" | "/generosTodos" | "/genero" | "/detalle" | "/users" | "/contact" | "/login" | "/register" | "/resena" | "/biblioteca" | "/profile" | "/admin/login" | "/admin" | "/admin/users" | "/admin/books" | "/admin/authors" | "/admin/books/new" | "/admin/authors/new";
+    page: "/" | "/libros" | "/autores" | "/generosTodos" | "/generosTodos/:slug" | "/detalle/:bookId" | "/users" | "/contact" | "/login" | "/register" | "/resena" | "/biblioteca" | "/profile" | "/admin/login" | "/admin" | "/admin/users" | "/admin/books" | "/admin/authors" | "/admin/books/new" | "/admin/authors/new";
   };
   "routes/_index.jsx": {
     id: "routes/_index";
@@ -94,13 +98,13 @@ type RouteFiles = {
     id: "routes/_generosTodos";
     page: "/generosTodos";
   };
-  "routes/_genero.jsx": {
-    id: "routes/_genero";
-    page: "/genero";
+  "routes/genero.$slug.jsx": {
+    id: "routes/genero.$slug";
+    page: "/generosTodos/:slug";
   };
-  "routes/_detalle.jsx": {
-    id: "routes/_detalle";
-    page: "/detalle";
+  "routes/detalle.$bookId.jsx": {
+    id: "routes/detalle.$bookId";
+    page: "/detalle/:bookId";
   };
   "routes/users.jsx": {
     id: "routes/users";
@@ -166,8 +170,8 @@ type RouteModules = {
   "routes/_libros": typeof import("./app/routes/_libros.jsx");
   "routes/_autores": typeof import("./app/routes/_autores.jsx");
   "routes/_generosTodos": typeof import("./app/routes/_generosTodos.jsx");
-  "routes/_genero": typeof import("./app/routes/_genero.jsx");
-  "routes/_detalle": typeof import("./app/routes/_detalle.jsx");
+  "routes/genero.$slug": typeof import("./app/routes/genero.$slug.jsx");
+  "routes/detalle.$bookId": typeof import("./app/routes/detalle.$bookId.jsx");
   "routes/users": typeof import("./app/routes/users.jsx");
   "routes/contact": typeof import("./app/routes/contact.jsx");
   "routes/login": typeof import("./app/routes/login.jsx");

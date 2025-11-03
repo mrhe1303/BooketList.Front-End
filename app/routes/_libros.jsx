@@ -39,7 +39,7 @@ export default function Libros() {
                                     <h5 className="card-title">{item.titulo_libro} </h5>
                                     <p className="card-text">{item.autor.nombre_autor} {item.autor.apellido_autor}</p>
                                     <button className="btn btn-light mt-auto">
-                                        <Link to={`/${item.id_libros}`}
+                                        <Link to={`/detalle/${item.id_libros}`}
                                             className="link-dark link-underline link-underline-opacity-0">
                                             Más información
                                         </Link>
