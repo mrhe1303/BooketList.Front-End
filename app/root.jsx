@@ -1,19 +1,13 @@
-import { Outlet, useLocation } from 'react-router'
+// app/root.jsx
+import { Outlet } from 'react-router'
 import HtmlShell from './components/HtmlShell.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 
 export default function App() {
-
-
-
-
-
-
   return (
     <ThemeProvider>
       <AuthProvider>
-
         <HtmlShell>
           <main className='container mb-5'>
             <Outlet />
@@ -25,15 +19,19 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }) {
+  console.error('Error caught by boundary:', error);
+
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <HtmlShell>
-          <main className='container mb-5'>
-            <Outlet />
-          </main>
-        </HtmlShell>
-      </AuthProvider>
+      <HtmlShell>
+        <main className='container mb-5'>
+          <div className="alert alert-danger">
+            <h2>Error</h2>
+            <p>{error?.message || 'Algo salió mal'}</p>
+            <pre>{error?.stack}</pre>
+          </div>
+        </main>
+      </HtmlShell>
     </ThemeProvider>
   )
 }

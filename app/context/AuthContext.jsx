@@ -6,24 +6,33 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const user_id = localStorage.getItem('user_id');
-        const username = localStorage.getItem('username');
-        const nombre = localStorage.getItem('nombre_usuario');
-        const apellido = localStorage.getItem('apellido_usuario');
-
-        if (token && user_id && username) {
-            setUser({
-                id: user_id,
-                token,
-                username, 
-                nombre_usuario: nombre,
-                apellido_usuario: apellido
-            });
+        if (typeof window === 'undefined') {
+            setLoading(false);
+            return;
         }
-        setLoading(false);
-    }, []);
 
+        try {
+            const token = localStorage.getItem('token');
+            const user_id = localStorage.getItem('user_id');
+            const username = localStorage.getItem('username');
+            const nombre = localStorage.getItem('nombre_usuario');
+            const apellido = localStorage.getItem('apellido_usuario');
+
+            if (token && user_id && username) {
+                setUser({
+                    id: user_id,
+                    token,
+                    username,
+                    nombre_usuario: nombre,
+                    apellido_usuario: apellido
+                });
+            }
+        } catch (error) {
+            console.error('Error loading auth state:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
     const login = async (email, password) => {
         try {
@@ -33,37 +42,39 @@ export const AuthProvider = ({ children }) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    correo_electronico: email,
-                    contrasena: password
+                    email_usuario: email,
+                    password_usuario: password
                 })
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || 'Error al iniciar sesión');
+                throw new Error(data.error || data.message || 'Error al iniciar sesión');
             }
 
-            // Store user data
             const userData = {
                 id: data.user.id_usuario,
                 token: data.access_token,
-                username: data.user.correo_electronico,
+                username: data.user.email_usuario,
                 nombre_usuario: data.user.nombre_usuario,
                 apellido_usuario: data.user.apellido_usuario
             };
 
             setUser(userData);
 
-            localStorage.setItem('token', data.access_token);
-            localStorage.setItem('user_id', data.user.id_usuario);
-            localStorage.setItem('username', data.user.correo_electronico);
-            localStorage.setItem('nombre_usuario', data.user.nombre_usuario);
-            localStorage.setItem('apellido_usuario', data.user.apellido_usuario);
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('token', data.access_token);
+                localStorage.setItem('user_id', data.user.id_usuario);
+                localStorage.setItem('username', data.user.email_usuario);
+                localStorage.setItem('nombre_usuario', data.user.nombre_usuario);
+                localStorage.setItem('apellido_usuario', data.user.apellido_usuario);
+            }
 
             return { success: true };
 
         } catch (error) {
+            console.error('Login error:', error);
             return { success: false, error: error.message };
         }
     };
@@ -78,8 +89,8 @@ export const AuthProvider = ({ children }) => {
                 body: JSON.stringify({
                     nombre_usuario: nombre,
                     apellido_usuario: apellido,
-                    correo_electronico: email,
-                    contrasena: password
+                    email_usuario: email,
+                    password_usuario: password
                 })
             });
 
@@ -89,44 +100,48 @@ export const AuthProvider = ({ children }) => {
                 throw new Error(data.error || 'Error al crear la cuenta');
             }
 
-            // Auto-login after registration
             const userData = {
                 id: data.user.id_usuario,
                 token: data.access_token,
-                username: data.user.correo_electronico,
+                username: data.user.email_usuario,
                 nombre_usuario: data.user.nombre_usuario,
                 apellido_usuario: data.user.apellido_usuario
             };
 
             setUser(userData);
 
-            localStorage.setItem('token', data.access_token);
-            localStorage.setItem('user_id', data.user.id_usuario);
-            localStorage.setItem('username', data.user.correo_electronico);
-            localStorage.setItem('nombre_usuario', data.user.nombre_usuario);
-            localStorage.setItem('apellido_usuario', data.user.apellido_usuario);
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('token', data.access_token);
+                localStorage.setItem('user_id', data.user.id_usuario);
+                localStorage.setItem('username', data.user.email_usuario);
+                localStorage.setItem('nombre_usuario', data.user.nombre_usuario);
+                localStorage.setItem('apellido_usuario', data.user.apellido_usuario);
+            }
 
             return { success: true };
 
         } catch (error) {
+            console.error('Register error:', error);
             return { success: false, error: error.message };
         }
     };
 
     const logout = () => {
         setUser(null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('user_id');
-        localStorage.removeItem('username');
-        localStorage.removeItem('nombre_usuario');
-        localStorage.removeItem('apellido_usuario');
+
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user_id');
+            localStorage.removeItem('username');
+            localStorage.removeItem('nombre_usuario');
+            localStorage.removeItem('apellido_usuario');
+        }
     };
 
     const isAuthenticated = () => {
         return !!user && !!user.token;
     };
 
-    // Helper function for authenticated API calls
     const authFetch = async (url, options = {}) => {
         const headers = {
             'Content-Type': 'application/json',
@@ -137,17 +152,21 @@ export const AuthProvider = ({ children }) => {
             headers['Authorization'] = `Bearer ${user.token}`;
         }
 
-        const response = await fetch(url, {
-            ...options,
-            headers,
-        });
+        try {
+            const response = await fetch(url, {
+                ...options,
+                headers,
+            });
 
-        // If unauthorized, logout
-        if (response.status === 401) {
-            logout();
+            if (response.status === 401) {
+                logout();
+            }
+
+            return response;
+        } catch (error) {
+            console.error('authFetch error:', error);
+            throw error;
         }
-
-        return response;
     };
 
     const value = {
@@ -162,7 +181,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {children}
         </AuthContext.Provider>
     );
 };
