@@ -1,88 +1,188 @@
-import { useLoaderData, Link, useParams } from "react-router";
-
-
-
+import { useLoaderData, Link } from "react-router";
+import { useAuth } from "../context/useAuth";
+import { useState, useEffect } from "react";
 
 export async function loader() {
-  const response = await fetch('https://backend-gold-alpha-80.vercel.app/api/books')
-
-
-
-  return response.json()
+  const response = await fetch('https://backend-gold-alpha-80.vercel.app/api/books');
+  return response.json();
 }
 
 export default function Home() {
   const data = useLoaderData();
+  const { user, isAuthenticated, login, logout, authFetch } = useAuth();
 
-  console.log(data);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [currentReadings, setCurrentReadings] = useState([]);
 
+  // Fetch user's biblioteca when authenticated
+  useEffect(() => {
+    if (isAuthenticated()) {
+      authFetch('https://backend-gold-alpha-80.vercel.app/api/biblioteca')
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error('Error fetching biblioteca');
+        })
+        .then(data => setCurrentReadings(data.slice(0, 4)))
+        .catch(err => console.error('Error fetching biblioteca:', err));
+    }
+  }, [isAuthenticated, authFetch]);
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
 
+    const result = await login(email, password);
 
+    if (!result.success) {
+      setError(result.error);
+    } else {
+      setEmail('');
+      setPassword('');
+    }
+  };
 
+  const handleLogout = () => {
+    logout();
+  };
 
-  return (
-    <>
+  // If user is NOT authenticated, show login form
+  if (!isAuthenticated()) {
+    return (
       <div className="row">
-        <div className="welcomeContainer col-8" >
-          <h1>BooketList - Encuentra tu próximo libro </h1>
+        <div className="welcomeContainer col-8">
+          <h1>BooketList - Encuentra tu próximo libro</h1>
           <p>¡Bienvenidos y Bienvenidas!</p>
           <p>BooketList es el lugar de encuentro para todos los que alguna vez se dijeron a sí mismos: "No sé qué leer".</p>
-          <p>Acá, encontrarás un compendio de todos los libros que toda persona amante de la literatura debe leer antes de morir. Tenemos libros para todos los gustos y de todos los géneros, guarda tus favoritos, agrega reseñas y calificaciones y date el per</p>
+          <p>Acá, encontrarás un compendio de todos los libros que toda persona amante de la literatura debe leer antes de morir. Tenemos libros para todos los gustos y de todos los géneros, guarda tus favoritos, agrega reseñas y calificaciones.</p>
         </div>
 
         <div className="loginContainer col-4">
-          <form>
+          <form onSubmit={handleLogin}>
             <h2>Iniciar sesión</h2>
-            <div className="mb-3">
-              <label htmlFor="correoElectrónico" className="form-label">Correo electrónico</label>
-              <input type="email" className="form-control" id="correoElectrónico" aria-describedby="emailHelp" />
 
-            </div>
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
+
             <div className="mb-3">
-              <label htmlFor="contraseña" className="form-label">Contraseña</label>
-              <input type="password" className="form-control" id="contraseña" />
+              <label htmlFor="correoElectrónico" className="form-label">
+                Correo electrónico
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="correoElectrónico"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
 
-            <button type="submit" className="btn btn-light">Iniciar sesión</button>
-            <p>¿No tienes una cuenta? <Link to={'/register'}>Crea una cuenta.</Link></p>
+            <div className="mb-3">
+              <label htmlFor="contraseña" className="form-label">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <button type="submit" className="btn btn-light">
+              Iniciar sesión
+            </button>
+
+            <p className="mt-2">
+              ¿No tienes una cuenta? <Link to="/register">Crea una cuenta.</Link>
+            </p>
           </form>
         </div>
-
       </div>
+    );
+  }
 
-//Si ya se inició sesión:
 
+  return (
+    <div className="homeContainer text-start my-5 px-4">
+      <div className="card">
+        <div className="card-body">
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 className="card-title">BooketList</h5>
+              <h6 className="card-subtitle mb-2 text-body-secondary">
+                ¡Bienvenido/a {user?.nombre_usuario}!
+              </h6>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="btn btn-outline-danger btn-sm"
+            >
+              Cerrar sesión
+            </button>
+          </div>
 
-      <div className="homeContainer text-start my-5 px-4">
+          <p className="card-text">¡Comienza a explorar!</p>
 
-        <div className="card" >
-          <div className="card-body">
-            <h5 className="card-title">BooketList</h5>
-            <h6 className="card-subtitle mb-2 text-body-secondary">¡Bienvenido/a #nombreDeUsuario!</h6>
-            <p className="card-text">¡Comienza a explorar! </p>
-            <h6>Lecturas actuales:</h6>
-            <div className="container text-center">
-              <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-                <div className="col">
-                  <div className="card" >
-                    <img src="https://placehold.co/100" className="card-img-top" alt="portada" />
-                    <div className="card-body">
-                      <h5 className="card-title">Título </h5>
-                      <p className="card-text">Autor</p>
-                      <a href="/detalle" className="btn btn-light">Más información</a>
+          <h6 className="mt-4">Lecturas actuales:</h6>
+          <div className="container text-center">
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+              {currentReadings.length > 0 ? (
+                currentReadings.map((item) => (
+                  <div className="col" key={item.id_biblioteca}>
+                    <div className="card h-100">
+                      <img
+                        src={item.libro?.enlace_portada_libro || "https://placehold.co/100"}
+                        className="card-img-top"
+                        alt={item.libro?.titulo_libro}
+                        style={{ height: '200px', objectFit: 'cover' }}
+                      />
+                      <div className="card-body">
+                        <h6 className="card-title text-truncate">
+                          {item.libro?.titulo_libro || 'Título'}
+                        </h6>
+                        <p className="card-text small text-muted">
+                          {item.libro?.autor ?
+                            `${item.libro.autor.nombre_autor} ${item.libro.autor.apellido_autor}`
+                            : 'Autor'}
+                        </p>
+                        <Link
+                          to={`/detalle/${item.libro?.id_libros}`}
+                          className="btn btn-light btn-sm"
+                        >
+                          Más información
+                        </Link>
+                      </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                <div className="col-12">
+                  <p className="text-muted">No tienes libros en tu biblioteca aún.</p>
                 </div>
-                <a href="/biblioteca" className="card-link">Mi Biblioteca</a>
-                <a href="/libros" className="card-link">Encuentra tu siguiente libro favorito</a>
-              </div>
+              )}
+            </div>
+
+            <div className="mt-4">
+              <Link to="/biblioteca" className="card-link me-3">
+                Mi Biblioteca
+              </Link>
+              <Link to="/generosTodos" className="card-link">
+                Encuentra tu siguiente libro favorito
+              </Link>
             </div>
           </div>
         </div>
-      </div >
-    </>
-
-
-  )
+      </div>
+    </div>
+  );
 }
