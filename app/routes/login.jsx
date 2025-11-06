@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { useAuth } from '../context/useAuth';
+import { useAuth } from '../context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
@@ -27,7 +27,7 @@ const Login = () => {
 
         try {
             const result = await login(formData.email, formData.password);
-            
+
             if (result.success) {
                 navigate('/');
             } else {
@@ -48,18 +48,18 @@ const Login = () => {
                 <div className="card-body p-4">
                     <h2 className="card-title text-center mb-2">Iniciar Sesión</h2>
                     <p className="text-center text-muted mb-4">Accede a tu biblioteca personal</p>
-                    
+
                     {error && (
                         <div className="alert alert-danger alert-dismissible fade show" role="alert">
                             {error}
-                            <button 
-                                type="button" 
-                                className="btn-close" 
+                            <button
+                                type="button"
+                                className="btn-close"
                                 onClick={() => setError('')}
                             ></button>
                         </div>
                     )}
-                    
+
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">
@@ -75,7 +75,7 @@ const Login = () => {
                                 required
                             />
                         </div>
-                        
+
                         <div className="mb-4">
                             <label htmlFor="password" className="form-label">
                                 Contraseña
@@ -90,9 +90,9 @@ const Login = () => {
                                 required
                             />
                         </div>
-                        
-                        <button 
-                            type="submit" 
+
+                        <button
+                            type="submit"
                             className="btn btn-primary w-100 py-2"
                             disabled={loading}
                         >
@@ -106,7 +106,7 @@ const Login = () => {
                             )}
                         </button>
                     </form>
-                    
+
                     <div className="text-center mt-4">
                         <p className="mb-0">
                             ¿No tienes cuenta?{' '}

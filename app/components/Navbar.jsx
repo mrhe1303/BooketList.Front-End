@@ -2,18 +2,17 @@ import { Link } from 'react-router'
 import { faLightbulb, faBook } from '../utils/faIcons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTheme } from '../context/ThemeContext'
-import { useAuth } from "../context/useAuth";
+import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 
 export async function loader() {
-  const response = await fetch('https://backend-gold-alpha-80.vercel.app/api/books');
+  const response = await fetch('http://127.0.0.1:5000/api/books');
   return response.json();
 }
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme()
-
-  const { user, isAuthenticated, login, logout, authFetch, loading } = useAuth();
+  const { user, isAuthenticated, logout, authFetch } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,37 +20,29 @@ export default function Navbar() {
   const [currentReadings, setCurrentReadings] = useState([]);
 
   useEffect(() => {
-    if (isAuthenticated()) {
-      authFetch('https://backend-gold-alpha-80.vercel.app/api/biblioteca')
+    if (isAuthenticated) {
+      authFetch('http://127.0.0.1:5000/api/my-library')
         .then(response => {
           if (response.ok) {
             return response.json();
           }
           throw new Error('Error fetching biblioteca');
         })
-        .then(data => setCurrentReadings(data.slice(0, 4)))
+        .then(data => {
+          // Fixed: Access the books array from the data object
+          if (data && data.books) {
+            setCurrentReadings(data.books.slice(0, 4));
+          }
+        })
         .catch(err => console.error('Error fetching biblioteca:', err));
     }
   }, [isAuthenticated, authFetch]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    const result = await login(email, password);
-
-    if (!result.success) {
-      setError(result.error);
-    } else {
-      setEmail('');
-      setPassword('');
-    }
-  };
-
   const handleLogout = () => {
     logout();
   };
-  if (!isAuthenticated()) {
+
+  if (!isAuthenticated) {
     return (
       <nav className={`navbar navbar-expand bg-${theme}`}>
         <div className='container-fluid'>
@@ -60,27 +51,17 @@ export default function Navbar() {
               BooketList
             </a>
             <li className='nav-item me-auto p-2'>
-
-              <Link
-                to='/libros'
-                className='nav-link'
-              >
+              <Link to='/libros' className='nav-link'>
                 Todos los Libros
               </Link>
             </li>
             <li className='nav-item p-2'>
-              <Link
-                to='/generosTodos'
-                className='nav-link'
-              >
+              <Link to='/generosTodos' className='nav-link'>
                 Géneros
               </Link>
             </li>
             <li className='nav-item p-2'>
-              <Link
-                to='/autores'
-                className='nav-link'
-              >
+              <Link to='/autores' className='nav-link'>
                 Autores
               </Link>
             </li>
@@ -90,13 +71,10 @@ export default function Navbar() {
                   Accede a tu cuenta
                 </button>
                 <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="/login">Iniciar Sesión</a></li>
-                  <li><a className="dropdown-item" href="/register">Crear Sesión </a></li>
-                  
+                  <li><Link className="dropdown-item" to="/login">Iniciar Sesión</Link></li>
+                  <li><Link className="dropdown-item" to="/register">Crear Sesión</Link></li>
                 </ul>
               </div>
-
-
             </li>
             <li className='nav-item p-2'>
               <form className="d-flex" role="search">
@@ -106,8 +84,7 @@ export default function Navbar() {
             </li>
             <li className='nav-item p-2'>
               <button
-                className={`btn btn-outline-${theme === 'dark' ? 'light' : 'dark'
-                  } border-0 p-1 mx-2`}
+                className={`btn btn-outline-${theme === 'dark' ? 'light' : 'dark'} border-0 p-1 mx-2`}
                 onClick={toggleTheme}
               >
                 <FontAwesomeIcon icon={faLightbulb} />
@@ -118,6 +95,7 @@ export default function Navbar() {
       </nav>
     )
   }
+
   return (
     <nav className={`navbar navbar-expand bg-${theme}`}>
       <div className='container-fluid'>
@@ -126,27 +104,17 @@ export default function Navbar() {
             BooketList
           </a>
           <li className='nav-item me-auto p-2'>
-
-            <Link
-              to='/libros'
-              className='nav-link'
-            >
+            <Link to='/libros' className='nav-link'>
               Todos los Libros
             </Link>
           </li>
           <li className='nav-item p-2'>
-            <Link
-              to='/generosTodos'
-              className='nav-link'
-            >
+            <Link to='/generosTodos' className='nav-link'>
               Géneros
             </Link>
           </li>
           <li className='nav-item p-2'>
-            <Link
-              to='/autores'
-              className='nav-link'
-            >
+            <Link to='/autores' className='nav-link'>
               Autores
             </Link>
           </li>
@@ -156,13 +124,11 @@ export default function Navbar() {
                 {user?.nombre_usuario}
               </button>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#PerfilUsuario">Mi perfil</a></li>
-                <li><a className="dropdown-item" href="#Biblioteca Usuario">Mi Bibilioteca</a></li>
-                <li><button className="dropdown-item" onClick={handleLogout}>Cerrar Sesion</button></li>
+                <li><Link className="dropdown-item" to="/profile">Mi perfil</Link></li>
+                <li><Link className="dropdown-item" to="/biblioteca">Mi Biblioteca</Link></li>
+                <li><button className="dropdown-item" onClick={handleLogout}>Cerrar Sesión</button></li>
               </ul>
             </div>
-
-
           </li>
           <li className='nav-item p-2'>
             <form className="d-flex" role="search">
@@ -172,8 +138,7 @@ export default function Navbar() {
           </li>
           <li className='nav-item p-2'>
             <button
-              className={`btn btn-outline-${theme === 'dark' ? 'light' : 'dark'
-                } border-0 p-1 mx-2`}
+              className={`btn btn-outline-${theme === 'dark' ? 'light' : 'dark'} border-0 p-1 mx-2`}
               onClick={toggleTheme}
             >
               <FontAwesomeIcon icon={faLightbulb} />
@@ -184,4 +149,3 @@ export default function Navbar() {
     </nav>
   );
 }
-  

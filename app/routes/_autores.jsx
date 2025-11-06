@@ -2,14 +2,14 @@ import { useLoaderData, Link } from "react-router";
 
 export async function loader() {
     // Fetch all authors
-    const responseAuthors = await fetch('https://backend-gold-alpha-80.vercel.app/api/authors');
+    const responseAuthors = await fetch('http://127.0.0.1:5000/api/authors');
     const authors = await responseAuthors.json();
 
     // Fetch books for each author
     const authorsWithBooks = await Promise.all(
         authors.map(async (author) => {
             const booksResponse = await fetch(
-                `https://backend-gold-alpha-80.vercel.app/api/authors/${author.id_autor}/profile`
+                `http://127.0.0.1:5000/api/authors/${author.id_autor}/profile`
             );
             const authorData = await booksResponse.json();
             return authorData;
@@ -62,7 +62,7 @@ export default function Autores() {
                                         </li>
                                     )}
                                 </ul>
-{/* 
+                                {/* 
                                 <Link
                                     to={`/autor/${authorProfile.author.id_autor}`}
                                     className="btn btn-primary btn-sm mt-3 w-100"
