@@ -29,7 +29,7 @@ export default function HtmlShell({
       <body>
         <Navbar />
         {children}
-        <Footer />
+        {/* <Footer /> */}
         <ScrollRestoration />
         <Scripts />
         <script 

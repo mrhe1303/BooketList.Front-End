@@ -44,7 +44,7 @@ export default function BibliotecaUsuario() {
     if (loading) {
         return (
             <div className="container mt-5 text-center">
-                <div className="spinner-border text-primary" role="status">
+                <div className="spinner-border text-light" role="status">
                     <span className="visually-hidden">Cargando...</span>
                 </div>
                 <p className="mt-3">Cargando biblioteca...</p>
@@ -128,7 +128,7 @@ export default function BibliotecaUsuario() {
                                             <h6 className="card-title">{item.book.titulo_libro}</h6>
                                             <p className="card-text text-muted small">{item.book.autor}</p>
                                             <span className={`badge ${item.reading_state === 'leido' ? 'bg-success' :
-                                                    item.reading_state === 'leyendo' ? 'bg-warning' : 'bg-info'
+                                                item.reading_state === 'leyendo' ? 'bg-warning' : 'bg-info'
                                                 }`}>
                                                 {item.reading_state === 'leido' ? 'Leído' :
                                                     item.reading_state === 'leyendo' ? 'Leyendo' : 'Por Leer'}
@@ -136,7 +136,7 @@ export default function BibliotecaUsuario() {
                                         </div>
                                         <div className="card-footer">
                                             <Link to={`/libros/${item.book.id_libros}`}
-                                                className="btn btn-sm btn-primary w-100">
+                                                className="btn btn-sm btn-light w-100">
                                                 Ver Detalles
                                             </Link>
                                         </div>
@@ -160,7 +160,7 @@ export default function BibliotecaUsuario() {
                                     <div key={author} className="list-group-item">
                                         <div className="d-flex justify-content-between align-items-center">
                                             <h5 className="mb-1">{author}</h5>
-                                            <span className="badge bg-primary rounded-pill">
+                                            <span className="badge bg-light rounded-pill">
                                                 {authorBooks.length} libro{authorBooks.length !== 1 ? 's' : ''}
                                             </span>
                                         </div>
@@ -202,7 +202,7 @@ export default function BibliotecaUsuario() {
                                         </div>
                                         <div className="card-footer">
                                             <Link to={`/libros/${item.book.id_libros}`}
-                                                className="btn btn-sm btn-primary w-100">
+                                                className="btn btn-sm btn-light w-100">
                                                 Ver Detalles
                                             </Link>
                                         </div>
@@ -232,7 +232,7 @@ export default function BibliotecaUsuario() {
                                         </div>
                                         <div className="card-footer">
                                             <Link to={`/libros/${item.book.id_libros}`}
-                                                className="btn btn-sm btn-primary w-100">
+                                                className="btn btn-sm btn-light w-100">
                                                 Ver Detalles
                                             </Link>
                                         </div>
@@ -262,7 +262,7 @@ export default function BibliotecaUsuario() {
                                         </div>
                                         <div className="card-footer">
                                             <Link to={`/libros/${item.book.id_libros}`}
-                                                className="btn btn-sm btn-primary w-100">
+                                                className="btn btn-sm btn-light w-100">
                                                 Ver Detalles
                                             </Link>
                                         </div>

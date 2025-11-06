@@ -36,7 +36,7 @@ export default function DetalleLibro() {
             setIsLoadingUserData(true);
             try {
                 const response = await fetch(
-                    `http://127.0.0.1:5000/api/books/${book.id}`,
+                    `http://127.0.0.1:5000/api/my-library/books/${book.id}`,
                     {
                         headers: {
                             'Authorization': `Bearer ${auth.user.token}`
@@ -74,7 +74,7 @@ export default function DetalleLibro() {
         .replace(/\s+/g, '-');
 
     const readingStates = [
-        { value: 'quiero_leer', label: 'Quiero Leer' },
+        { value: 'quiero_leer', label: 'Quiero Leerlo' },
         { value: 'leyendo', label: 'Leyendo' },
         { value: 'leido', label: 'Leído' }
     ];
@@ -93,7 +93,7 @@ export default function DetalleLibro() {
 
         try {
             const response = await fetch(
-                `http://127.0.0.1:5000/api/user/books/${book.id}/reading-state`,
+                `http://127.0.0.1:5000/api/my-library/books`,
                 {
                     method: 'POST',
                     headers: {
@@ -110,7 +110,7 @@ export default function DetalleLibro() {
 
                 // If user marked as "leido", navigate to review page
                 if (newState === 'leido') {
-                    navigate(`/libros/${book.id}/review`);
+                    navigate(`/:${book.id}/resena`);
                 }
             } else {
                 alert('Error al actualizar el estado de lectura');
@@ -210,7 +210,7 @@ export default function DetalleLibro() {
 
                         <Link
                             to={`/generosTodos/${genreSlug}`}
-                            className="btn btn-outline-primary"
+                            className="btn btn-outline-light"
                         >
                             Ver más libros como este
                         </Link>
@@ -219,7 +219,7 @@ export default function DetalleLibro() {
                         {renderStars()}
 
                         {/* Reading State Dropdown */}
-                        <div className="dropdown" style={{ position: 'relative' }}>
+                        <div className="dropdown mb-3" style={{ position: 'relative' }}>
                             <button
                                 className="btn btn-success dropdown-toggle w-100"
                                 type="button"
@@ -250,7 +250,7 @@ export default function DetalleLibro() {
                 <div className="col-md-8">
                     <h1>{book.title}</h1>
                     <h3 className="text-muted">{book.author}</h3>
-                    <span className="badge bg-primary mb-3">{book.genre}</span>
+                    <span className="badge bg-light mb-3">{book.genre}</span>
 
                     {/* Display current rating if exists */}
                     {rating > 0 && (
@@ -265,7 +265,7 @@ export default function DetalleLibro() {
                                 <span style={{ color: '#e0e0e0' }}>
                                     {'★'.repeat(5 - rating)}
                                 </span>
-                                <span className="ms-2 text-primary">Ver/editar reseña</span>
+                                <span className="ms-2 text-light">Ver/editar reseña</span>
                             </Link>
                         </div>
                     )}

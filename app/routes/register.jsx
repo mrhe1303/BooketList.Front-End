@@ -172,7 +172,7 @@ const Register = () => {
 
                         <button
                             type="submit"
-                            className="btn btn-primary w-100 py-2"
+                            className="btn btn-light w-100 py-2"
                             disabled={loading}
                         >
                             {loading ? (

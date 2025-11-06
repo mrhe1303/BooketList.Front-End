@@ -44,7 +44,7 @@ export default function UserProfile() {
   if (loading) {
     return (
       <div className="container mt-5 text-center">
-        <div className="spinner-border text-primary" role="status">
+        <div className="spinner-border text-light" role="status">
           <span className="visually-hidden">Cargando...</span>
         </div>
         <p className="mt-3">Cargando perfil...</p>
@@ -59,7 +59,7 @@ export default function UserProfile() {
           <h4 className="alert-heading">Error</h4>
           <p>{error}</p>
           <hr />
-          <Link to="/" className="btn btn-primary">Volver al inicio</Link>
+          <Link to="/" className="btn btn-light">Volver al inicio</Link>
         </div>
       </div>
     );
@@ -75,7 +75,7 @@ export default function UserProfile() {
     <div className="container-fluid">
       <div className="row">
         {/* Header */}
-        <div className="col-12 bg-primary text-white p-3 mb-4">
+        <div className="col-12 bg-light text-white p-3 mb-4">
           <div className="d-flex justify-content-between align-items-center">
             <h4 className="mb-0">BooketList</h4>
             <div className="d-flex align-items-center">
@@ -111,7 +111,7 @@ export default function UserProfile() {
                 <div className="row">
                   <div className="col-md-8">
                     <div className="d-flex align-items-center">
-                      <div className="avatar bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center"
+                      <div className="avatar bg-light text-white rounded-circle me-3 d-flex align-items-center justify-content-center"
                         style={{ width: '60px', height: '60px', fontSize: '1.5rem' }}>
                         {user.firstName.charAt(0)}
                       </div>
@@ -223,7 +223,7 @@ export default function UserProfile() {
               <div className="col-md-6">
                 {/* Autores Más Leídos */}
                 <div className="card mb-4">
-                  <div className="card-header bg-primary text-white">
+                  <div className="card-header bg-light text-white">
                     <h5 className="card-title mb-0">
                       <i className="fas fa-crown me-2"></i>
                       Autores Más Leídos
