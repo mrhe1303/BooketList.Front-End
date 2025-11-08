@@ -4,6 +4,7 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+
 export default function HtmlShell({
   children,
   title = 'BooketList'
@@ -22,6 +23,7 @@ export default function HtmlShell({
           content='width=device-width, initial-scale=1.0'
         />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></link>
+        <link rel="icon" href="/favicon.ico" />
         <title>{title}</title>
         <Meta />
         <Links />

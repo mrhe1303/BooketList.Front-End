@@ -23,7 +23,7 @@ export default function Libros() {
 
 
     return (
-        <div className="containerLibros">
+        <div className="containerLibros" id="top">
             <h1>Biblioteca</h1>
             <h3>Acá podrás explorar todos los libros en nuestra colección</h3>
 
@@ -53,6 +53,7 @@ export default function Libros() {
                     ))}
                 </div>
             </div>
+            <a href="#top">Back to Top</a>
         </div>
     )
 }
