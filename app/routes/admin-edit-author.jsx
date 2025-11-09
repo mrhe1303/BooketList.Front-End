@@ -37,11 +37,11 @@ export default function AdminEditAuthor() {
     try {
       setLoading(true)
       const response = await adminFetch('/admin/authors/list')
-      
+
       if (response.ok) {
         const authorsData = await response.json()
         const currentAuthor = authorsData.find(a => a.id_autor === parseInt(id))
-        
+
         if (currentAuthor) {
           setAuthor({
             nombre_autor: currentAuthor.nombre_autor || '',
@@ -123,7 +123,7 @@ export default function AdminEditAuthor() {
         <div className="row">
           <div className="col-md-3 col-lg-2 vh-100 position-fixed">
             <div className="p-3">
-              <h4 className="text-center mb-4">BooketList Admin</h4>
+
               <nav className="nav flex-column">
                 <Link to="/admin" className="nav-link mb-2">
                   <i className="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -227,9 +227,9 @@ export default function AdminEditAuthor() {
                         </div>
 
                         <div className="d-flex gap-2">
-                          <button 
-                            type="button" 
-                            className="btn btn-primary" 
+                          <button
+                            type="button"
+                            className="btn btn-primary"
                             onClick={handleSave}
                             disabled={saving}
                           >
@@ -247,8 +247,8 @@ export default function AdminEditAuthor() {
                           <Link to="/admin/authors" className="btn btn-outline-secondary">
                             Cancelar
                           </Link>
-                          <button 
-                            type="button" 
+                          <button
+                            type="button"
                             className="btn btn-outline-danger"
                             onClick={() => {
                               if (window.confirm('¿Estás seguro de que quieres eliminar este autor?')) {
@@ -271,22 +271,22 @@ export default function AdminEditAuthor() {
                     </div>
                     <div className="card-body text-center">
                       {author.imagen_autor ? (
-                        <img 
-                          src={author.imagen_autor} 
+                        <img
+                          src={author.imagen_autor}
                           alt="Vista previa"
                           className="rounded-circle mb-3"
-                          style={{width: '120px', height: '120px', objectFit: 'cover'}}
+                          style={{ width: '120px', height: '120px', objectFit: 'cover' }}
                           onError={(e) => {
                             e.target.style.display = 'none'
                             e.target.nextElementSibling.style.display = 'flex'
                           }}
                         />
                       ) : null}
-                      <div 
-                        className="avatar bg-info text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" 
+                      <div
+                        className="avatar bg-info text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3"
                         style={{
-                          width: '120px', 
-                          height: '120px', 
+                          width: '120px',
+                          height: '120px',
                           fontSize: '2.5rem',
                           display: author.imagen_autor ? 'none' : 'flex'
                         }}
@@ -295,13 +295,13 @@ export default function AdminEditAuthor() {
                       </div>
                       <h4>{author.nombre_autor || 'Nombre'} {author.apellido_autor || 'Apellido'}</h4>
                       <p className="text-muted">Autor</p>
-                      
+
                       {author.biografia_autor && (
                         <div className="mt-3 text-start">
                           <h6>Biografía:</h6>
                           <p className="small text-muted">
-                            {author.biografia_autor.length > 150 
-                              ? author.biografia_autor.substring(0, 150) + '...' 
+                            {author.biografia_autor.length > 150
+                              ? author.biografia_autor.substring(0, 150) + '...'
                               : author.biografia_autor
                             }
                           </p>
@@ -316,19 +316,19 @@ export default function AdminEditAuthor() {
                     </div>
                     <div className="card-body">
                       <div className="d-grid gap-2">
-                        <Link 
+                        <Link
                           to={`/admin/authors/${id}`}
                           className="btn btn-outline-primary btn-sm"
                         >
                           <i className="fas fa-eye me-2"></i>Ver Detalles del Autor
                         </Link>
-                        <Link 
+                        <Link
                           to="/admin/books"
                           className="btn btn-outline-success btn-sm"
                         >
                           <i className="fas fa-book me-2"></i>Gestionar Libros
                         </Link>
-                        <Link 
+                        <Link
                           to="/admin/authors/new"
                           className="btn btn-outline-info btn-sm"
                         >

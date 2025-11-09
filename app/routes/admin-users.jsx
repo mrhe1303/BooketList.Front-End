@@ -30,7 +30,7 @@ export default function AdminUsers() {
     try {
       setLoading(true)
       const response = await adminFetch('/admin/users/all')
-      
+
       if (response.ok) {
         const data = await response.json()
         setUsers(data)
@@ -49,10 +49,10 @@ export default function AdminUsers() {
       const response = await adminFetch(`/admin/users/${userId}/status`, {
         method: 'PUT'
       })
-      
+
       if (response.ok) {
         const updatedUser = await response.json()
-        setUsers(users.map(user => 
+        setUsers(users.map(user =>
           user.id_usuario === userId ? updatedUser.user : user
         ))
         alert(updatedUser.message)
@@ -87,7 +87,7 @@ export default function AdminUsers() {
         <div className="row">
           <div className="col-md-3 col-lg-2 vh-100 position-fixed">
             <div className="p-3">
-              <h4 className="text-center mb-4">BooketList Admin</h4>
+
               <nav className="nav flex-column">
                 <Link to="/admin" className="nav-link mb-2">
                   <i className="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -159,7 +159,7 @@ export default function AdminUsers() {
                             <td>{user.id_usuario}</td>
                             <td>
                               <div className="d-flex align-items-center">
-                                <div className="avatar bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style={{width: '40px', height: '40px'}}>
+                                <div className="avatar bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
                                   {user.nombre_usuario?.charAt(0) || 'U'}
                                 </div>
                                 <div>
@@ -183,7 +183,7 @@ export default function AdminUsers() {
                                 >
                                   <i className={`fas ${user.is_active ? 'fa-lock' : 'fa-unlock'}`}></i>
                                 </button>
-                                <Link 
+                                <Link
                                   to={`/admin/users/${user.id_usuario}`}
                                   className="btn btn-sm btn-outline-primary"
                                   title="Ver detalles"

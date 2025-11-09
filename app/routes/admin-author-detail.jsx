@@ -9,7 +9,7 @@ export default function AdminAuthorDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { adminFetch, isAdminLoggedIn, adminLogout } = useAuth()
-  
+
   if (!isAdminLoggedIn()) {
     return <Navigate to="/admin/login" replace />
   }
@@ -28,19 +28,16 @@ export default function AdminAuthorDetail() {
   const loadAuthorDetail = async () => {
     try {
       setLoading(true)
-      const response = await adminFetch('/admin/authors/list')
-      
+
+      // Fetch author profile with books from public API
+      const response = await fetch(`${API_BASE_URL}/api/authors/${id}/profile`)
+
       if (response.ok) {
-        const authorsData = await response.json()
-        const currentAuthor = authorsData.find(a => a.id_autor === parseInt(id))
-        
-        if (currentAuthor) {
-          setAuthor(currentAuthor)
-        } else {
-          setError('Autor no encontrado')
-        }
+        const data = await response.json()
+        setAuthor(data.author)
+        setBooks(data.books)
       } else {
-        setError('Error al cargar autor')
+        setError('Autor no encontrado')
       }
     } catch (error) {
       setError('Error de conexión: ' + error.message)
@@ -94,7 +91,7 @@ export default function AdminAuthorDetail() {
         <div className="row">
           <div className="col-md-3 col-lg-2 vh-100 position-fixed">
             <div className="p-3">
-              <h4 className="text-center mb-4">BooketList Admin</h4>
+
               <nav className="nav flex-column">
                 <Link to="/admin" className="nav-link mb-2">
                   <i className="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -134,14 +131,14 @@ export default function AdminAuthorDetail() {
                 <div className="col-md-4">
                   <div className="card">
                     <div className="card-body text-center">
-                      <div className="avatar bg-info text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" 
-                           style={{width: '100px', height: '100px', fontSize: '2rem'}}>
+                      <div className="avatar bg-info text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3"
+                        style={{ width: '100px', height: '100px', fontSize: '2rem' }}>
                         {author.nombre_autor?.charAt(0) || 'A'}
                       </div>
                       <h4>{author.nombre_autor} {author.apellido_autor}</h4>
-                      
+
                       <div className="d-grid gap-2 mt-3">
-                        <Link 
+                        <Link
                           to={`/admin/authors/${id}/edit`}
                           className="btn btn-outline-primary"
                         >
@@ -205,7 +202,7 @@ export default function AdminAuthorDetail() {
                                   </td>
                                   <td>
                                     <div className="d-flex gap-1">
-                                      <Link 
+                                      <Link
                                         to={`/admin/books/edit/${book.id_libros}`}
                                         className="btn btn-sm btn-outline-primary"
                                         title="Editar libro"

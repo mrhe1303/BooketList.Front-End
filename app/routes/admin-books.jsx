@@ -30,7 +30,7 @@ export default function AdminBooks() {
     try {
       setLoading(true)
       const response = await adminFetch('/admin/books/list')
-      
+
       if (response.ok) {
         const data = await response.json()
         setBooks(data)
@@ -50,7 +50,7 @@ export default function AdminBooks() {
         const response = await adminFetch(`/admin/books/${bookId}/delete`, {
           method: 'DELETE'
         })
-        
+
         if (response.ok) {
           setBooks(books.filter(book => book.id_libros !== bookId))
           alert('Libro eliminado correctamente')
@@ -88,7 +88,7 @@ export default function AdminBooks() {
         <div className="row">
           <div className="col-md-3 col-lg-2 vh-100 position-fixed">
             <div className="p-3">
-              <h4 className="text-center mb-4">BooketList Admin</h4>
+
               <nav className="nav flex-column">
                 <Link to="/admin" className="nav-link mb-2">
                   <i className="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -164,11 +164,11 @@ export default function AdminBooks() {
                           <tr key={book.id_libros}>
                             <td>{book.id_libros}</td>
                             <td>
-                              <img 
-                                src={book.enlace_portada_libro || 'https://via.placeholder.com/50x70'} 
+                              <img
+                                src={book.enlace_portada_libro || 'https://via.placeholder.com/50x70'}
                                 alt={`Portada de ${book.titulo_libro}`}
                                 className="rounded"
-                                style={{width: '50px', height: '70px', objectFit: 'cover'}}
+                                style={{ width: '50px', height: '70px', objectFit: 'cover' }}
                                 onError={(e) => {
                                   e.target.src = 'https://via.placeholder.com/50x70'
                                 }}
@@ -178,8 +178,8 @@ export default function AdminBooks() {
                               <strong>{book.titulo_libro}</strong>
                             </td>
                             <td>
-                              {book.autor ? 
-                                `${book.autor.nombre_autor} ${book.autor.apellido_autor}` : 
+                              {book.autor ?
+                                `${book.autor.nombre_autor} ${book.autor.apellido_autor}` :
                                 'Sin autor'
                               }
                             </td>
@@ -188,7 +188,7 @@ export default function AdminBooks() {
                             </td>
                             <td>
                               <div className="d-flex gap-1 flex-nowrap">
-                                <Link 
+                                <Link
                                   to={`/admin/books/edit/${book.id_libros}`}
                                   className="btn btn-sm btn-outline-primary"
                                   title="Editar libro"

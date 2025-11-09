@@ -39,7 +39,7 @@ export default function AdminUserDetail() {
         adminFetch(`/admin/users/${id}`),
         adminFetch(`/admin/users/${id}/stats`)
       ])
-      
+
       if (userResponse.ok && statsResponse.ok) {
         const userData = await userResponse.json()
         const statsData = await statsResponse.json()
@@ -59,7 +59,7 @@ export default function AdminUserDetail() {
     try {
       setReviewsLoading(true)
       const response = await adminFetch(`/admin/users/${id}/reviews`)
-      
+
       if (response.ok) {
         const reviewsData = await response.json()
         setReviews(reviewsData.reviews)
@@ -77,7 +77,7 @@ export default function AdminUserDetail() {
     try {
       setLibraryLoading(true)
       const response = await adminFetch(`/admin/users/${id}/library`)
-      
+
       if (response.ok) {
         const libraryData = await response.json()
         setLibrary(libraryData.library)
@@ -105,7 +105,7 @@ export default function AdminUserDetail() {
       const response = await adminFetch(`/admin/users/${id}/status`, {
         method: 'PUT'
       })
-      
+
       if (response.ok) {
         const updatedUser = await response.json()
         setUser(updatedUser.user)
@@ -161,7 +161,7 @@ export default function AdminUserDetail() {
               <strong>Email:</strong> {user.email_usuario}
             </div>
             <div className="mb-3">
-              <strong>Estado:</strong> 
+              <strong>Estado:</strong>
               <span className={`badge ${user.is_active ? 'bg-success' : 'bg-danger'} ms-2`}>
                 {user.is_active ? 'Activo' : 'Bloqueado'}
               </span>
@@ -175,7 +175,7 @@ export default function AdminUserDetail() {
           </div>
         </div>
       </div>
-      
+
       <div className="col-md-6">
         <div className="card">
           <div className="card-header">
@@ -200,28 +200,28 @@ export default function AdminUserDetail() {
                     <small className="text-muted">En Biblioteca</small>
                   </div>
                 </div>
-                
+
                 {stats.reading_status && (
                   <div>
                     <h6>Estado de Lectura:</h6>
-                    <div className="progress mb-2" style={{height: '20px'}}>
-                      <div 
-                        className="progress-bar bg-success" 
-                        style={{width: `${(stats.reading_status.leido / stats.total_books) * 100 || 0}%`}}
+                    <div className="progress mb-2" style={{ height: '20px' }}>
+                      <div
+                        className="progress-bar bg-success"
+                        style={{ width: `${(stats.reading_status.leido / stats.total_books) * 100 || 0}%` }}
                         title={`Leídos: ${stats.reading_status.leido}`}
                       >
                         {stats.reading_status.leido}
                       </div>
-                      <div 
-                        className="progress-bar bg-warning" 
-                        style={{width: `${(stats.reading_status.leyendo / stats.total_books) * 100 || 0}%`}}
+                      <div
+                        className="progress-bar bg-warning"
+                        style={{ width: `${(stats.reading_status.leyendo / stats.total_books) * 100 || 0}%` }}
                         title={`Leyendo: ${stats.reading_status.leyendo}`}
                       >
                         {stats.reading_status.leyendo}
                       </div>
-                      <div 
-                        className="progress-bar bg-info" 
-                        style={{width: `${(stats.reading_status.quiero_leer / stats.total_books) * 100 || 0}%`}}
+                      <div
+                        className="progress-bar bg-info"
+                        style={{ width: `${(stats.reading_status.quiero_leer / stats.total_books) * 100 || 0}%` }}
                         title={`Por leer: ${stats.reading_status.quiero_leer}`}
                       >
                         {stats.reading_status.quiero_leer}
@@ -287,9 +287,9 @@ export default function AdminUserDetail() {
                     </td>
                     <td>
                       {review.resena ? (
-                        <p className="mb-0" style={{maxWidth: '300px'}}>
-                          {review.resena.length > 100 
-                            ? `${review.resena.substring(0, 100)}...` 
+                        <p className="mb-0" style={{ maxWidth: '300px' }}>
+                          {review.resena.length > 100
+                            ? `${review.resena.substring(0, 100)}...`
                             : review.resena
                           }
                         </p>
@@ -342,15 +342,15 @@ export default function AdminUserDetail() {
                     <td>
                       <div className="d-flex align-items-center">
                         {item.book.enlace_portada_libro ? (
-                          <img 
-                            src={item.book.enlace_portada_libro} 
+                          <img
+                            src={item.book.enlace_portada_libro}
                             alt={item.book.titulo_libro}
                             className="me-3"
-                            style={{width: '40px', height: '60px', objectFit: 'cover'}}
+                            style={{ width: '40px', height: '60px', objectFit: 'cover' }}
                           />
                         ) : (
                           <div className="bg-light me-3 d-flex align-items-center justify-content-center"
-                               style={{width: '40px', height: '60px'}}>
+                            style={{ width: '40px', height: '60px' }}>
                             <i className="fas fa-book text-muted"></i>
                           </div>
                         )}
@@ -364,12 +364,11 @@ export default function AdminUserDetail() {
                       <span className="badge bg-secondary">{item.book.genero_libro}</span>
                     </td>
                     <td>
-                      <span className={`badge ${
-                        item.estado_lectura === 'leido' ? 'bg-success' :
-                        item.estado_lectura === 'leyendo' ? 'bg-warning' : 'bg-info'
-                      }`}>
+                      <span className={`badge ${item.estado_lectura === 'leido' ? 'bg-success' :
+                          item.estado_lectura === 'leyendo' ? 'bg-warning' : 'bg-info'
+                        }`}>
                         {item.estado_lectura === 'leido' ? 'Leído' :
-                         item.estado_lectura === 'leyendo' ? 'Leyendo' : 'Por leer'}
+                          item.estado_lectura === 'leyendo' ? 'Leyendo' : 'Por leer'}
                       </span>
                     </td>
                     <td>
@@ -391,7 +390,7 @@ export default function AdminUserDetail() {
         <div className="row">
           <div className="col-md-3 col-lg-2 vh-100 position-fixed">
             <div className="p-3">
-              <h4 className="text-center mb-4">BooketList Admin</h4>
+
               <nav className="nav flex-column">
                 <Link to="/admin" className="nav-link mb-2">
                   <i className="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -433,8 +432,8 @@ export default function AdminUserDetail() {
                   <div className="row align-items-center">
                     <div className="col-md-8">
                       <div className="d-flex align-items-center">
-                        <div className="avatar bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center" 
-                             style={{width: '80px', height: '80px', fontSize: '2rem'}}>
+                        <div className="avatar bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center"
+                          style={{ width: '80px', height: '80px', fontSize: '2rem' }}>
                           {user.nombre_usuario?.charAt(0) || 'U'}
                         </div>
                         <div>
@@ -453,7 +452,7 @@ export default function AdminUserDetail() {
                     </div>
                     <div className="col-md-4 text-end">
                       <div className="mb-3">
-                        <button 
+                        <button
                           className={`btn ${user.is_active ? 'btn-warning' : 'btn-success'} btn-lg`}
                           onClick={toggleUserStatus}
                         >

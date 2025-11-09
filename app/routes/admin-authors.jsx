@@ -30,7 +30,7 @@ export default function AdminAuthors() {
     try {
       setLoading(true)
       const response = await adminFetch('/admin/authors/list')
-      
+
       if (response.ok) {
         const data = await response.json()
         setAuthors(data)
@@ -50,7 +50,7 @@ export default function AdminAuthors() {
         const response = await adminFetch(`/admin/authors/${authorId}/delete`, {
           method: 'DELETE'
         })
-        
+
         if (response.ok) {
           setAuthors(authors.filter(author => author.id_autor !== authorId))
           alert('Autor eliminado correctamente')
@@ -85,7 +85,7 @@ export default function AdminAuthors() {
         <div className="row">
           <div className="col-md-3 col-lg-2 vh-100 position-fixed">
             <div className="p-3">
-              <h4 className="text-center mb-4">BooketList Admin</h4>
+
               <nav className="nav flex-column">
                 <Link to="/admin" className="nav-link mb-2">
                   <i className="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -160,7 +160,7 @@ export default function AdminAuthors() {
                             <td>{author.id_autor}</td>
                             <td>
                               <div className="d-flex align-items-center">
-                                <div className="avatar bg-info text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style={{width: '40px', height: '40px'}}>
+                                <div className="avatar bg-info text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
                                   {author.nombre_autor?.charAt(0) || 'A'}
                                 </div>
                                 <div>
@@ -170,22 +170,22 @@ export default function AdminAuthors() {
                             </td>
                             <td>
                               <small className="text-muted">
-                                {author.biografia_autor ? 
-                                  author.biografia_autor.substring(0, 100) + '...' : 
+                                {author.biografia_autor ?
+                                  author.biografia_autor.substring(0, 100) + '...' :
                                   'Sin biografía'
                                 }
                               </small>
                             </td>
                             <td>
                               <div className="d-flex gap-1 flex-nowrap">
-                                <Link 
+                                <Link
                                   to={`/admin/authors/${author.id_autor}`}
                                   className="btn btn-sm btn-outline-primary"
                                   title="Ver detalles"
                                 >
                                   <i className="fas fa-eye"></i>
                                 </Link>
-                                <Link 
+                                <Link
                                   to={`/admin/authors/${author.id_autor}/edit`}
                                   className="btn btn-sm btn-outline-warning"
                                   title="Editar autor"

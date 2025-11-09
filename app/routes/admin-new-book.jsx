@@ -77,7 +77,7 @@ export default function AdminNewBook() {
   }
 
   const handleInputChange = (field, value) => {
-    setBook({...book, [field]: value})
+    setBook({ ...book, [field]: value })
   }
 
   const handleLogout = () => {
@@ -92,7 +92,7 @@ export default function AdminNewBook() {
         <div className="row">
           <div className="col-md-3 col-lg-2 vh-100 position-fixed">
             <div className="p-3">
-              <h4 className="text-center mb-4">BooketList Admin</h4>
+
               <nav className="nav flex-column">
                 <Link to="/admin" className="nav-link mb-2">
                   <i className="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -169,7 +169,7 @@ export default function AdminNewBook() {
                         <div className="row">
                           <div className="col-md-6 mb-3">
                             <label className="form-label">Género *</label>
-                            <select 
+                            <select
                               className="form-select"
                               value={book.genero_libro}
                               onChange={(e) => handleInputChange('genero_libro', e.target.value)}
@@ -227,9 +227,9 @@ export default function AdminNewBook() {
                         </div>
 
                         <div className="d-flex gap-2">
-                          <button 
-                            type="button" 
-                            className="btn btn-primary" 
+                          <button
+                            type="button"
+                            className="btn btn-primary"
                             onClick={handleSave}
                             disabled={loading}
                           >
@@ -260,18 +260,18 @@ export default function AdminNewBook() {
                     </div>
                     <div className="card-body text-center">
                       {book.enlace_portada_libro ? (
-                        <img 
-                          src={book.enlace_portada_libro} 
+                        <img
+                          src={book.enlace_portada_libro}
                           alt="Vista previa de portada"
                           className="rounded mb-3"
-                          style={{width: '150px', height: '200px', objectFit: 'cover'}}
+                          style={{ width: '150px', height: '200px', objectFit: 'cover' }}
                           onError={(e) => {
                             e.target.style.display = 'none'
                           }}
                         />
                       ) : (
-                        <div className="bg-light rounded d-flex align-items-center justify-content-center mb-3" 
-                             style={{width: '150px', height: '200px', margin: '0 auto'}}>
+                        <div className="bg-light rounded d-flex align-items-center justify-content-center mb-3"
+                          style={{ width: '150px', height: '200px', margin: '0 auto' }}>
                           <i className="fas fa-book fa-3x text-muted"></i>
                         </div>
                       )}

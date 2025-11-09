@@ -55,7 +55,7 @@ export default function AdminNewAuthor() {
   }
 
   const handleInputChange = (field, value) => {
-    setAuthor({...author, [field]: value})
+    setAuthor({ ...author, [field]: value })
   }
 
   const handleLogout = () => {
@@ -70,7 +70,7 @@ export default function AdminNewAuthor() {
         <div className="row">
           <div className="col-md-3 col-lg-2 vh-100 position-fixed">
             <div className="p-3">
-              <h4 className="text-center mb-4">BooketList Admin</h4>
+
               <nav className="nav flex-column">
                 <Link to="/admin" className="nav-link mb-2">
                   <i className="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -151,9 +151,9 @@ export default function AdminNewAuthor() {
                         </div>
 
                         <div className="d-flex gap-2">
-                          <button 
-                            type="button" 
-                            className="btn btn-primary" 
+                          <button
+                            type="button"
+                            className="btn btn-primary"
                             onClick={handleSave}
                             disabled={loading}
                           >
@@ -184,18 +184,18 @@ export default function AdminNewAuthor() {
                     </div>
                     <div className="card-body text-center">
                       {author.imagen_autor ? (
-                        <img 
-                          src={author.imagen_autor} 
+                        <img
+                          src={author.imagen_autor}
                           alt="Vista previa"
                           className="rounded-circle mb-3"
-                          style={{width: '100px', height: '100px', objectFit: 'cover'}}
+                          style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                           onError={(e) => {
                             e.target.style.display = 'none'
                           }}
                         />
                       ) : (
-                        <div className="avatar bg-info text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" 
-                             style={{width: '100px', height: '100px', fontSize: '2rem'}}>
+                        <div className="avatar bg-info text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3"
+                          style={{ width: '100px', height: '100px', fontSize: '2rem' }}>
                           {author.nombre_autor ? author.nombre_autor.charAt(0) : 'A'}
                         </div>
                       )}

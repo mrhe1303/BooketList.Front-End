@@ -4,13 +4,12 @@ import { API_BASE_URL } from "../utils/api";
 
 export default function AdminAuthorBooks() {
   const { id } = useParams()
-  
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-3 col-lg-2 vh-100 position-fixed">
           <div className="p-3">
-            <h4 className="text-center mb-4">BooketList Admin</h4>
             <nav className="nav flex-column">
               <Link to="/admin" className="nav-link mb-2">
                 <i className="fas fa-tachometer-alt me-2"></i>Dashboard

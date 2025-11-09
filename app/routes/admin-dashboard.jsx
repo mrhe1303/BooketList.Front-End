@@ -37,9 +37,9 @@ export default function AdminDashboard() {
     try {
       setLoading(true)
       console.log('Loading dashboard stats...')
-      
+
       const response = await adminFetch('/admin/dashboard/overview')
-      
+
       if (response.ok) {
         const data = await response.json()
         console.log('Dashboard stats loaded:', data)
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
         <div className="row">
           <div className="col-md-3 col-lg-2 vh-100 position-fixed">
             <div className="p-3">
-              <h4 className="text-center mb-4">BooketList Admin</h4>
+
               <nav className="nav flex-column">
                 <Link to="/admin" className="nav-link mb-2 active">
                   <i className="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -109,8 +109,8 @@ export default function AdminDashboard() {
               {error && (
                 <div className="alert alert-danger" role="alert">
                   {error}
-                  <button 
-                    className="btn btn-sm btn-outline-secondary ms-2" 
+                  <button
+                    className="btn btn-sm btn-outline-secondary ms-2"
                     onClick={loadDashboardStats}
                   >
                     Reintentar
