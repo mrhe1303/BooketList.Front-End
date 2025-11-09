@@ -312,10 +312,10 @@ export default function UserProfile() {
                               </p>
                               <div className="d-flex justify-content-between align-items-center">
                                 <small className="text-muted">{review.date}</small>
-                                <small className="text-muted">
+                                {/* <small className="text-muted">
                                   <i className="fas fa-heart text-danger me-1"></i>
                                   {review.likes} likes
-                                </small>
+                                </small> */}
                               </div>
                             </div>
                           ))}

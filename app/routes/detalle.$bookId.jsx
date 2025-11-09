@@ -469,6 +469,7 @@ export default function DetalleLibro() {
                             </div>
 
                             {/* Dropdown estado de lectura */}
+                            {/* Dropdown estado de lectura */}
                             <div className="dropdown">
                                 <button
                                     className="btn btn-success btn-lg dropdown-toggle w-100"
@@ -489,12 +490,13 @@ export default function DetalleLibro() {
                                     )}
                                 </button>
                                 {showDropdown && (
-                                    <ul className="dropdown-menu w-100">
+                                    <ul className="dropdown-menu show w-100" style={{ position: 'absolute' }}>
                                         {readingStates.map((state) => (
                                             <li key={state.value}>
                                                 <button
                                                     className="dropdown-item"
                                                     onClick={() => handleReadingStateChange(state.value)}
+                                                    disabled={isLoadingUserData}
                                                 >
                                                     <i className={`fas fa-${state.icon} me-2`}></i>
                                                     {state.label}
