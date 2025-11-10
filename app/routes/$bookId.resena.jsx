@@ -101,7 +101,7 @@ export default function Reseña() {
         <div className="containerResena">
             <div className="libro">
                 <div className="card-body d-flex">
-                    <img src={book.cover_url || "https://placehold.co/100"} alt={book.title} style={{ width: '100px', height: '150px', objectFit: 'cover' }} />
+                    <img src={book.cover_url || "https://placehold.co/100"} alt={book.title} style={{ width: '100px', height: '150px', objectFit: 'contain' }} />
                     <div className='ms-2'>
                         <h5 className="card-title">{book.title}</h5>
                         <p className="card-text">{book.author}</p>

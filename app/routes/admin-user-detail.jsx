@@ -346,7 +346,7 @@ export default function AdminUserDetail() {
                             src={item.book.enlace_portada_libro}
                             alt={item.book.titulo_libro}
                             className="me-3"
-                            style={{ width: '40px', height: '60px', objectFit: 'cover' }}
+                            style={{ width: '40px', height: '60px', objectFit: 'contain' }}
                           />
                         ) : (
                           <div className="bg-light me-3 d-flex align-items-center justify-content-center"
@@ -365,7 +365,7 @@ export default function AdminUserDetail() {
                     </td>
                     <td>
                       <span className={`badge ${item.estado_lectura === 'leido' ? 'bg-success' :
-                          item.estado_lectura === 'leyendo' ? 'bg-warning' : 'bg-info'
+                        item.estado_lectura === 'leyendo' ? 'bg-warning' : 'bg-info'
                         }`}>
                         {item.estado_lectura === 'leido' ? 'Leído' :
                           item.estado_lectura === 'leyendo' ? 'Leyendo' : 'Por leer'}

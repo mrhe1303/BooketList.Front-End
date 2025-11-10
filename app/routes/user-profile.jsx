@@ -115,7 +115,7 @@ export default function UserProfile() {
             <h4 className="alert-heading">Error</h4>
             <p>{error}</p>
             <hr />
-            <Link to="/" className="btn btn-light">Volver al inicio</Link>
+            <Link to="/" className="btn btn-warning">Volver al inicio</Link>
           </div>
         </div>
       </SessionBlocker>
@@ -136,7 +136,7 @@ export default function UserProfile() {
             <div className="p-4">
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <h1>Mi Perfil</h1>
-                <Link to="/" className="btn btn-outline-secondary">
+                <Link to="/" className="btn btn-outline-warning">
                   <i className="fas fa-arrow-left me-2"></i>Volver al Inicio
                 </Link>
               </div>

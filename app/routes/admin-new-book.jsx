@@ -264,7 +264,7 @@ export default function AdminNewBook() {
                           src={book.enlace_portada_libro}
                           alt="Vista previa de portada"
                           className="rounded mb-3"
-                          style={{ width: '150px', height: '200px', objectFit: 'cover' }}
+                          style={{ width: '150px', height: '200px', objectFit: 'contain' }}
                           onError={(e) => {
                             e.target.style.display = 'none'
                           }}

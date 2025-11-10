@@ -188,7 +188,7 @@ export default function AdminNewAuthor() {
                           src={author.imagen_autor}
                           alt="Vista previa"
                           className="rounded-circle mb-3"
-                          style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                          style={{ width: '100px', height: '100px', objectFit: 'contain' }}
                           onError={(e) => {
                             e.target.style.display = 'none'
                           }}

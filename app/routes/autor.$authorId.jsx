@@ -122,7 +122,7 @@ export default function AutorPerfil() {
                                             alt={libro.titulo_libro}
                                             style={{
                                                 height: '500px',
-                                                objectFit: 'cover',
+                                                objectFit: 'contain',
                                                 cursor: 'pointer'
                                             }}
                                             onClick={() => navigate(`/detalle/${libro.id_libros}`)}

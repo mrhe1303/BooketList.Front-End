@@ -169,9 +169,11 @@ export default function BibliotecaUsuario() {
                 {allBooks.map(item => (
                   <div key={item.library_id || item.rating_id} className="col-md-3 mb-4">
                     <div className="card h-100">
-                      <img src={item.book.enlace_portada_libro || 'https://placehold.co/300x450'}
-                        className="card-img-top" alt={item.book.titulo_libro}
-                        style={{ height: '300px', objectFit: 'cover' }} />
+                      <Link to={`/detalle/${item.book.id_libros}`}>
+                        <img src={item.book.enlace_portada_libro || 'https://placehold.co/300x450'}
+                          className="card-img-top" alt={item.book.titulo_libro}
+                          style={{ height: '300px', objectFit: 'contain' }} />
+                      </Link>
                       <div className="card-body">
                         <h6 className="card-title">{item.book.titulo_libro}</h6>
                         <p className="card-text text-muted small">{item.book.autor}</p>
@@ -227,7 +229,7 @@ export default function BibliotecaUsuario() {
                                 className="img-fluid rounded"
                                 alt={item.book.titulo_libro}
                                 title={item.book.titulo_libro}
-                                style={{ height: '150px', objectFit: 'cover' }} />
+                                style={{ height: '150px', objectFit: 'contain' }} />
                             </Link>
                           </div>
                         ))}
@@ -249,9 +251,11 @@ export default function BibliotecaUsuario() {
                 {leyendoBooks.map(item => (
                   <div key={item.library_id} className="col-md-3 mb-4">
                     <div className="card h-100">
-                      <img src={item.book.enlace_portada_libro || 'https://placehold.co/300x450'}
-                        className="card-img-top" alt={item.book.titulo_libro}
-                        style={{ height: '300px', objectFit: 'cover' }} />
+                      <Link to={`/detalle/${item.book.id_libros}`}>
+                        <img src={item.book.enlace_portada_libro || 'https://placehold.co/300x450'}
+                          className="card-img-top" alt={item.book.titulo_libro}
+                          style={{ height: '300px', objectFit: 'contain' }} />
+                      </Link>
                       <div className="card-body">
                         <h6 className="card-title">{item.book.titulo_libro}</h6>
                         <p className="card-text text-muted small">{item.book.autor}</p>
@@ -279,9 +283,11 @@ export default function BibliotecaUsuario() {
                 {leidoBooks.map(item => (
                   <div key={item.rating_id} className="col-md-3 mb-4">
                     <div className="card h-100">
-                      <img src={item.book.enlace_portada_libro || 'https://placehold.co/300x450'}
-                        className="card-img-top" alt={item.book.titulo_libro}
-                        style={{ height: '300px', objectFit: 'cover' }} />
+                      <Link to={`/detalle/${item.book.id_libros}`}>
+                        <img src={item.book.enlace_portada_libro || 'https://placehold.co/300x450'}
+                          className="card-img-top" alt={item.book.titulo_libro}
+                          style={{ height: '300px', objectFit: 'contain' }} />
+                      </Link>
                       <div className="card-body">
                         <h6 className="card-title">{item.book.titulo_libro}</h6>
                         <p className="card-text text-muted small">{item.book.autor}</p>
@@ -332,9 +338,11 @@ export default function BibliotecaUsuario() {
                 {quieroLeerBooks.map(item => (
                   <div key={item.library_id} className="col-md-3 mb-4">
                     <div className="card h-100">
-                      <img src={item.book.enlace_portada_libro || 'https://placehold.co/300x450'}
-                        className="card-img-top" alt={item.book.titulo_libro}
-                        style={{ height: '300px', objectFit: 'cover' }} />
+                      <Link to={`/detalle/${item.book.id_libros}`}>
+                        <img src={item.book.enlace_portada_libro || 'https://placehold.co/300x450'}
+                          className="card-img-top" alt={item.book.titulo_libro}
+                          style={{ height: '300px', objectFit: 'contain' }} />
+                      </Link>
                       <div className="card-body">
                         <h6 className="card-title">{item.book.titulo_libro}</h6>
                         <p className="card-text text-muted small">{item.book.autor}</p>

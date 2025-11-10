@@ -256,7 +256,7 @@ export default function DetalleLibro() {
 
     const renderStars = () => {
         return (
-            <div className="d-flex align-items-center justify-content-center gap-1 my-3">
+            <div className="d-flex align-items-center justify-content-center gap-1 my-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                     <button
                         key={star}
@@ -398,9 +398,9 @@ export default function DetalleLibro() {
     };
 
     return (
-        <div className="container my-4">
+        <div className="container ">
             {/* Botón volver */}
-            <nav aria-label="breadcrumb" className="mb-4">
+            <nav aria-label="breadcrumb" className="mb-1">
                 <ol className="breadcrumb">
                     <li className="breadcrumb-item">
                         <button 
@@ -429,7 +429,7 @@ export default function DetalleLibro() {
                                 className="img-fluid rounded shadow"
                                 style={{ 
                                     height: '350px', 
-                                    objectFit: 'cover',
+                                    objectFit: 'contain',
                                     width: '100%',
                                     maxWidth: '280px'
                                 }}
@@ -461,16 +461,15 @@ export default function DetalleLibro() {
                             </Link>
 
                             {/* Calificación con estrellas */}
-                            <div className="card bg-dark border-light">
+                            <div className="card bg-dark border-light p-1">
                                 <div className="card-body text-center">
-                                    <h6 className="card-title text-muted mb-3">Calificar este libro</h6>
+                                    <h6 className="card-title text-muted mb-1">Calificar este libro</h6>
                                     {renderStars()}
                                 </div>
                             </div>
 
-                            {/* Dropdown estado de lectura */}
-                            {/* Dropdown estado de lectura */}
-                            <div className="dropdown">
+                          
+                            <div className="dropdown mb-5">
                                 <button
                                     className="btn btn-success btn-lg dropdown-toggle w-100"
                                     type="button"

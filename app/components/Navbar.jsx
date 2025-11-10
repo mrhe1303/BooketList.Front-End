@@ -104,7 +104,7 @@ function SearchBar() {
             >
               {result.type === 'book' ? (
                 <>
-                  <i className="fas fa-book me-2 text-primary"></i>
+                  <i className="fas fa-book me-2 text-warning"></i>
                   <strong>{result.title}</strong>
                   <small className="text-muted d-block ms-4">{result.author}</small>
                 </>
@@ -208,7 +208,7 @@ export default function Navbar() {
     return (
       <nav className={`navbar navbar-expand-lg bg-${theme} shadow-sm`}>
         <div className='container-fluid'>
-          <Link to="/" className="navbar-brand fw-bold"><i className="fas fa-book me-2 text-primary"></i>BooketList</Link>
+          <Link to="/" className="navbar-brand fw-bold"><i className="fas fa-book me-2 text-warning"></i>BooketList</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNavbar">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -243,7 +243,7 @@ export default function Navbar() {
   return (
     <nav className={`navbar navbar-expand-lg bg-${theme} shadow-sm`}>
       <div className='container-fluid'>
-        <Link to="/" className="navbar-brand fw-bold"><i className="fas fa-book me-2 text-primary"></i>BooketList</Link>
+        <Link to="/" className="navbar-brand fw-bold"><i className="fas fa-book me-2 text-warning"></i>BooketList</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userNavbar">
           <span className="navbar-toggler-icon"></span>
         </button>

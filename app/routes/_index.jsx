@@ -2,6 +2,8 @@ import { useLoaderData, Link } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 import { API_BASE_URL } from "../utils/api";
+import { faBook } from '../utils/faIcons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export async function loader() {
   const response = await fetch(`${API_BASE_URL}/api/books`);
@@ -9,36 +11,63 @@ export async function loader() {
 }
 
 export default function Home() {
-  const data = useLoaderData();
-  const { user, isAuthenticated, login, logout, authFetch, loading } = useAuth();
+  const allBooks = useLoaderData();
+  const { user, isAuthenticated, login, logout, loading } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [currentReadings, setCurrentReadings] = useState([]);
+  const [userBooks, setUserBooks] = useState([]);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      authFetch(`${API_BASE_URL}/api/my-library`)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
+    if (isAuthenticated && user?.token) {
+      fetch(`${API_BASE_URL}/api/my-library`, {
+        headers: { 'Authorization': `Bearer ${user.token}` }
+      })
+        .then(async response => {
+          if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
           }
-          throw new Error('Error fetching biblioteca');
+          return response.json();
         })
-        .then(data => setCurrentReadings(data.books.slice(0, 4)))
-        .catch(err => console.error('Error fetching biblioteca:', err));
+        .then(data => {
+          // Add reading_state property to each book
+          const combined = [
+            ...(data.leyendo || []).map(item => ({ ...item, reading_state: 'leyendo' })),
+            ...(data.quiero_leer || []).map(item => ({ ...item, reading_state: 'quiero_leer' })),
+            ...(data.leido || []).map(item => ({ ...item, reading_state: 'leido' }))
+          ].slice(0, 5);
+          setUserBooks(combined);
+        })
+        .catch(err => console.error('Error:', err));
     }
-  }, [isAuthenticated, authFetch]);
+  }, [isAuthenticated, user?.token]);
+
+  const getBookStatus = (readingState) => {
+    if (!readingState) return null;
+
+    if (readingState === 'quiero_leer')
+      return { icon: 'heart', color: 'info', label: 'Quiero Leer' };
+    if (readingState === 'leyendo')
+      return { icon: 'book-open', color: 'warning', label: 'Leyendo' };
+    if (readingState === 'leido')
+      return { icon: 'check-circle', color: 'success', label: 'Leído' };
+
+    return null;
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
     const result = await login(email, password);
+    if (response.status === 401) {
+      // Token expired - logout user
+      logout();
+      throw new Error('Sesión expirada');
+    }
 
     if (!result.success) {
-      // Mostrar mensaje específico para cuenta bloqueada
       if (result.error && result.error.includes('bloqueada')) {
         setError(result.error);
       } else {
@@ -64,14 +93,37 @@ export default function Home() {
     );
   }
 
+  const booksToShow = isAuthenticated ? userBooks : allBooks.slice(0, 5);
+
   if (!isAuthenticated) {
     return (
-      <div className="row">
-        <div className="welcomeContainer col-8">
-          <h1>BooketList - Encuentra tu próximo libro</h1>
-          <p>¡Bienvenidos y Bienvenidas!</p>
-          <p>BooketList es el lugar de encuentro para todos los que alguna vez se dijeron a sí mismos: "No sé qué leer".</p>
-          <p>Acá, encontrarás un compendio de todos los libros que toda persona amante de la literatura debe leer antes de morir. Tenemos libros para todos los gustos y de todos los géneros, guarda tus favoritos, agrega reseñas y calificaciones.</p>
+      <div className="row mt-5">
+        <div className="welcomeContainer col-8 text-center">
+          <h1><FontAwesomeIcon icon={faBook} />BooketList </h1>
+          <h2>Encuentra tu próximo libro favorito</h2>
+          <h3>¡Bienvenidos!</h3>
+          <div className="m-3">
+            <h5 className="py-2">BooketList es el lugar de encuentro para todos los que alguna vez se preguntaron "¿Qué libros debería leer antes de morir?".</h5>
+            <h5>Encontrarás un compendio de libros de todos los géneros y para todos los gustos. Guarda tus favoritos, agrega reseñas y calificaciones y comparte tus opiniones sobre los mejores libros de la historia. </h5>
+          </div>
+
+          <div className="mt-4">
+            <h5>Algunos de nuestros libros:</h5>
+            <div className="row row-cols-5 g-3 justify-content-center">
+              {booksToShow.map((book) => (
+                <div className="col" key={book.id_libros}>
+                  <Link to={`/detalle/${book.id_libros}`}>
+                    <img
+                      src={book.enlace_portada_libro || "https://placehold.co/100x150"}
+                      className="img-fluid rounded shadow-sm"
+                      alt={book.titulo_libro}
+                      style={{ height: '150px', objectFit: 'cover' }}
+                    />
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="loginContainer col-4">
@@ -81,11 +133,10 @@ export default function Home() {
             {error && (
               <div className="alert alert-danger" role="alert">
                 <strong>Error:</strong> {error}
-                {/* Mostrar información de contacto si la cuenta está bloqueada */}
                 {error.includes('bloqueada') && (
                   <div className="mt-2">
                     <small>
-                      Si crees que esto es un error, contacta a: 
+                      Si crees que esto es un error, contacta a:
                       <a href="mailto:soporte@booketlist.com" className="text-danger ms-1">
                         soporte@booketlist.com
                       </a>
@@ -145,9 +196,9 @@ export default function Home() {
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <h5 className="card-title">BooketList</h5>
+              <h5 className="card-title"><FontAwesomeIcon icon={faBook} />BooketList</h5>
               <h6 className="card-subtitle mb-2 text-body-secondary">
-                ¡Bienvenido/a {user?.nombre_usuario}!
+                ¡Que bueno verte de nuevo {user?.nombre_usuario}!
               </h6>
             </div>
             <button
@@ -158,55 +209,61 @@ export default function Home() {
             </button>
           </div>
 
-          <p className="card-text">¡Comienza a explorar!</p>
+          <p className="card-text">¡Agrega más libros a tu biblioteca!</p>
 
-          <h6 className="mt-4">Lecturas actuales:</h6>
+          <h6 className="mt-4">Tu biblioteca:</h6>
           <div className="container text-center">
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-              {currentReadings.length > 0 ? (
-                currentReadings.map((item) => (
-                  <div className="col" key={item.id_biblioteca}>
-                    <div className="card h-100">
-                      <img
-                        src={item.libro?.enlace_portada_libro || "https://placehold.co/100"}
-                        className="card-img-top"
-                        alt={item.libro?.titulo_libro}
-                        style={{ height: '200px', objectFit: 'cover' }}
-                      />
-                      <div className="card-body">
-                        <h6 className="card-title text-truncate">
-                          {item.libro?.titulo_libro || 'Título'}
-                        </h6>
-                        <p className="card-text small text-muted">
-                          {item.libro?.autor ?
-                            `${item.libro.autor.nombre_autor} ${item.libro.autor.apellido_autor}`
-                            : 'Autor'}
-                        </p>
-                        <Link
-                          to={`/detalle/${item.libro?.id_libros}`}
-                          className="btn btn-light btn-sm"
-                        >
-                          Más información
-                        </Link>
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+              {booksToShow.length > 0 ? (
+                booksToShow.map((item) => {
+                  const status = getBookStatus(item.reading_state);
+                  return (
+                    <div className="col" key={item.library_id || item.rating_id}>
+                      <div className="card h-100">
+                        <div className="position-relative">
+                          <img
+                            src={item.book.enlace_portada_libro || "https://placehold.co/100"}
+                            className="card-img-top"
+                            alt={item.book.titulo_libro}
+                            style={{ height: '150px', objectFit: 'contain' }}
+                          />
+                          {status && (
+                            <span
+                              className={`position-absolute top-0 end-0 m-2 badge bg-${status.color} border border-light`}
+                              title={status.label}
+                            >
+                              <i className={`fas fa-${status.icon} fs-6 p-1`}></i>
+                            </span>
+                          )}
+                        </div>
+                        <div className="card-body align-items-center">
+                          
+                          <Link
+                            to={`/detalle/${item.book.id_libros}`}
+                            className="btn btn-light btn-sm"
+                          >
+                            Más información
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               ) : (
                 <div className="col-12">
                   <p className="text-muted">No tienes libros en tu biblioteca aún.</p>
                 </div>
               )}
             </div>
+          </div>
 
-            <div className="mt-4">
-              <Link to="/biblioteca" className="card-link me-3">
-                Mi Biblioteca
-              </Link>
-              <Link to="/generosTodos" className="card-link">
-                Encuentra tu siguiente libro favorito
-              </Link>
-            </div>
+          <div className="mt-4">
+            <Link to="/biblioteca" className="card-link me-3 text-warning">
+              Mi Biblioteca
+            </Link>
+            <Link to="/generosTodos" className="card-link text-warning">
+              Encuentra tu siguiente libro favorito
+            </Link>
           </div>
         </div>
       </div>

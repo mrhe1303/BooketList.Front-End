@@ -168,7 +168,7 @@ export default function AdminBooks() {
                                 src={book.enlace_portada_libro || 'https://via.placeholder.com/50x70'}
                                 alt={`Portada de ${book.titulo_libro}`}
                                 className="rounded"
-                                style={{ width: '50px', height: '70px', objectFit: 'cover' }}
+                                style={{ width: '50px', height: '70px', objectFit: 'contain' }}
                                 onError={(e) => {
                                   e.target.src = 'https://via.placeholder.com/50x70'
                                 }}

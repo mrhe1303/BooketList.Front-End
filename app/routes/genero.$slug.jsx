@@ -1,23 +1,46 @@
 import { useLoaderData, Link } from "react-router";
+import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext.jsx";
 import { API_BASE_URL } from "../utils/api";
 
 export async function loader({ params }) {
     const { slug } = params;
-
-
     const response = await fetch(`${API_BASE_URL}/api/books/genre/${slug}`);
     const books = await response.json();
-
-
     const genreName = books.length > 0
         ? books[0].genre
         : slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-
     return { books, genreName, slug };
 }
 
 export default function Genero() {
     const { books, genreName } = useLoaderData();
+    const auth = useAuth();
+    const [userLibrary, setUserLibrary] = useState(null);
+
+    useEffect(() => {
+        if (auth?.isAuthenticated) {
+            fetch(`${API_BASE_URL}/api/my-library`, {
+                headers: { 'Authorization': `Bearer ${auth.user.token}` }
+            })
+                .then(res => res.json())
+                .then(setUserLibrary)
+                .catch(console.error);
+        }
+    }, [auth?.isAuthenticated]);
+
+    const getBookStatus = (bookId) => {
+        if (!userLibrary) return null;
+
+        if (userLibrary.quiero_leer?.find(item => item.book.id_libros === bookId))
+            return { icon: 'heart', color: 'danger', label: 'Quiero Leer' };
+        if (userLibrary.leyendo?.find(item => item.book.id_libros === bookId))
+            return { icon: 'clock', color: 'warning', label: 'Leyendo' };
+        if (userLibrary.leido?.find(item => item.book.id_libros === bookId))
+            return { icon: 'check-circle', color: 'success', label: 'Leído' };
+
+        return null;
+    };
 
     return (
         <div className="container text-start">
@@ -34,36 +57,50 @@ export default function Genero() {
                     </li>
                 </ol>
             </nav>
-
-            <h1 className="m-1"> {genreName}</h1>
+            <h1 className="m-1">{genreName}</h1>
             <p className="text-muted">
                 {books.length} {books.length === 1 ? 'libro encontrado' : 'libros encontrados'}
             </p>
-
             <div className="row g-4 mt-3">
                 {books.length > 0 ? (
-                    books.map((book) => (
-                        <div className="col-md-3 col-sm-6" key={book.id}>
-                            <div className="card h-100">
-                                <img
-                                    src={book.cover_url || "https://placehold.co/150x200"}
-                                    className="card-img-top"
-                                    alt={book.title}
-                                    style={{ height: '300px', objectFit: 'cover' }}
-                                />
-                                <div className="card-body d-flex flex-column">
-                                    <h5 className="card-title">{book.title}</h5>
-                                    <p className="card-text text-muted">{book.author}</p>
-                                    <Link
-                                        to={`/detalle/${book.id}`}
-                                        className="btn btn-light mt-auto"
-                                    >
-                                        Ver detalles
-                                    </Link>
+                    books.map((book) => {
+                        const status = getBookStatus(book.id);
+                        return (
+                            <div className="col-md-3 col-sm-6" key={book.id}>
+                                <div className="card h-100">
+                                    <div className="position-relative">
+                                        <Link
+                                            to={`/detalle/${book.id}`}>
+                                            <img
+                                                src={book.cover_url || "https://placehold.co/150x200"}
+                                                className="card-img-top"
+                                                alt={book.title}
+                                                style={{ height: '300px', objectFit: 'contain' }}
+                                            />
+                                        </Link>
+                                        {status && (
+                                            <span
+                                                className={`position-absolute top-0 end-0 m-2 badge bg-${status.color}`}
+                                                title={status.label}
+                                            >
+                                                <i className={`fas fa-${status.icon}`}></i>
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="card-body d-flex flex-column">
+                                        <h5 className="card-title">{book.title}</h5>
+                                        <p className="card-text text-muted">{book.author}</p>
+                                        <Link
+                                            to={`/detalle/${book.id}`}
+                                            className="btn btn-light mt-auto"
+                                        >
+                                            Ver detalles
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))
+                        );
+                    })
                 ) : (
                     <div className="col-12">
                         <div className="alert alert-info">

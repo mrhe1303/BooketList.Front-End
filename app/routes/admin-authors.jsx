@@ -211,7 +211,7 @@ export default function AdminAuthors() {
 
               <div className="row mt-4">
                 <div className="col-md-4">
-                  <div className="card bg-light">
+                  <div className="card">
                     <div className="card-body text-center">
                       <h3 className="text-primary">{authors.length}</h3>
                       <p className="mb-0">Total Autores</p>

@@ -275,7 +275,7 @@ export default function AdminEditAuthor() {
                           src={author.imagen_autor}
                           alt="Vista previa"
                           className="rounded-circle mb-3"
-                          style={{ width: '120px', height: '120px', objectFit: 'cover' }}
+                          style={{ width: '120px', height: '120px', objectFit: 'contain' }}
                           onError={(e) => {
                             e.target.style.display = 'none'
                             e.target.nextElementSibling.style.display = 'flex'

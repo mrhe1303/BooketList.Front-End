@@ -290,7 +290,7 @@ export default function AdminEditBook() {
                         src={book.enlace_portada_libro}
                         alt="Portada del libro"
                         className="rounded mb-3"
-                        style={{ width: '150px', height: '200px', objectFit: 'cover' }}
+                        style={{ width: '150px', height: '200px', objectFit: 'contain' }}
                         onError={(e) => {
                           e.target.style.display = 'none'
                         }}
