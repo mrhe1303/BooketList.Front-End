@@ -254,7 +254,7 @@ export default function BibliotecaUsuario() {
                 })}
               </div>
             ) : (
-              <p>No tienes autores en tu biblioteca. ¡Agrega un libro! <Link to='/libros'>Explora nuestra biblioteca</Link></p>
+                <p>No tienes autores en tu biblioteca. ¡Agrega un libro! <Link to='/libros' className='link-warning'>Explora nuestra biblioteca</Link></p>
             )}
           </div>
 
@@ -286,7 +286,7 @@ export default function BibliotecaUsuario() {
                 ))}
               </div>
             ) : (
-              <p>No estás leyendo ningún libro en este momento. ¡Agrega un libro! <Link to='/libros'>Explora nuestra biblioteca</Link></p>
+                <p>No estás leyendo ningún libro en este momento. ¡Agrega un libro! <Link to='/libros' className='link-warning'>Explora nuestra biblioteca</Link></p>
             )}
           </div>
 
@@ -341,7 +341,7 @@ export default function BibliotecaUsuario() {
                 ))}
               </div>
             ) : (
-              <p>No tienes libros leídos en tu biblioteca. ¡Agrega un libro! <Link to='/libros'>Explora nuestra biblioteca</Link></p>
+                <p>No tienes libros leídos en tu biblioteca. ¡Agrega un libro! <Link to='/libros' className='link-warning'>Explora nuestra biblioteca</Link></p>
             )}
           </div>
 
@@ -373,7 +373,7 @@ export default function BibliotecaUsuario() {
                 ))}
               </div>
             ) : (
-              <p>No tienes libros por leer en tu biblioteca. ¡Agrega un libro! <Link to='/libros'>Explora nuestra biblioteca</Link></p>
+                <p>No tienes libros por leer en tu biblioteca. ¡Agrega un libro! <Link to='/libros' className='link-warning'>Explora nuestra biblioteca</Link></p>
             )}
           </div>
         </div>
